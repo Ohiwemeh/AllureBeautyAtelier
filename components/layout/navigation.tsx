@@ -4,8 +4,11 @@ import Link from "next/link"
 import { ShoppingBag, User, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { useCartStore } from "@/lib/store/cart-store"
 
 export default function Navigation() {
+  const itemCount = useCartStore((state) => state.getItemCount())
+
   return (
     <motion.header 
       initial={{ y: -20, opacity: 0 }}
@@ -62,9 +65,11 @@ export default function Navigation() {
             </Button>
             <Button variant="ghost" size="icon" className="rounded-full relative">
               <ShoppingBag className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-allure-gold text-[10px] font-medium text-white flex items-center justify-center">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-allure-gold text-[10px] font-medium text-white flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
               <span className="sr-only">Shopping bag</span>
             </Button>
           </div>
