@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 38 30 21; /* Warm dark background */
+    --foreground: 250 247 242; /* Cream */
+    
+    --card: 250 247 242;
+    --card-foreground: 26 26 26;
+    
+    --popover: 250 247 242;
+    --popover-foreground: 26 26 26;
+    
+    --primary: 26 26 26; /* Obsidian */
+    --primary-foreground: 250 247 242;
+    
+    --secondary: 212 199 186; /* Taupe */
+    --secondary-foreground: 26 26 26;
+    
+    --muted: 212 199 186;
+    --muted-foreground: 45 45 45;
+    
+    --accent: 201 166 137; /* Terracotta */
+    --accent-foreground: 26 26 26;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 250 247 242;
+    
+    --border: 212 199 186;
+    --input: 212 199 186;
+    --ring: 26 26 26;
+    
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-allure-cream text-allure-obsidian font-sans;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-allure-cream;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-allure-taupe rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-allure-terracotta;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .editorial-spacing {
+    @apply tracking-wide leading-relaxed;
+  }
+  
+  .luxury-border {
+    @apply border border-allure-taupe/30;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/60;
+  }
+}
