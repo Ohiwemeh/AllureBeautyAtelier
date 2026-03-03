@@ -1,9 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ShoppingBag } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Toast } from "@/components/ui/toast"
 import { useCartStore } from "@/lib/store/cart-store"
 import { formatCurrency } from "@/lib/utils"
 import type { Product } from "@/lib/types/product"
@@ -14,11 +16,14 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
+  const [showToast, setShowToast] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     addItem(product)
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 3000)
   }
 
   const primaryImage = Array.isArray(product.images) && product.images.length > 0
@@ -28,6 +33,12 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     : 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=800&q=80'
 
   return (
+    <>
+    <Toast 
+      message={`${product.name} added to cart`}
+      isVisible={showToast}
+      onClose={() => setShowToast(false)}
+    />
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -120,5 +131,6 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
       </Link>
     </motion.div>
+    </>
   )
 }

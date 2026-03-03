@@ -1,0 +1,317 @@
+"use client"
+
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { ArrowLeft, CreditCard, Lock } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useCartStore } from "@/lib/store/cart-store"
+import { formatCurrency, generateOrderNumber } from "@/lib/utils"
+import type { CheckoutFormData } from "@/lib/types/checkout"
+
+export default function CheckoutPage() {
+  const router = useRouter()
+  const { items, getTotal, clearCart } = useCartStore()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [sameAsShipping, setSameAsShipping] = useState(true)
+  
+  const [formData, setFormData] = useState<CheckoutFormData>({
+    shipping: {
+      fullName: '',
+      email: '',
+      phone: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: 'US',
+    },
+    billing: {
+      fullName: '',
+      email: '',
+      phone: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: 'US',
+    },
+    sameAsShipping: true,
+  })
+
+  // Redirect if cart is empty
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-serif mb-4">Your cart is empty</h1>
+          <p className="text-allure-charcoal/70 mb-6">Add some products before checking out</p>
+          <Button asChild>
+            <Link href="/shop">Continue Shopping</Link>
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const subtotal = getTotal()
+  const shipping = subtotal > 100 ? 0 : 12.00
+  const tax = subtotal * 0.08 // 8% tax
+  const total = subtotal + shipping + tax
+
+  const handleInputChange = (
+    section: 'shipping' | 'billing',
+    field: string,
+    value: string
+  ) => {
+    setFormData(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: value,
+      },
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsProcessing(true)
+
+    try {
+      // In a real app, this would integrate with Stripe
+      // For now, we'll simulate the order creation
+      const orderNumber = generateOrderNumber()
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
+      // Clear cart and redirect to confirmation
+      clearCart()
+      router.push(`/orders/confirmation?order=${orderNumber}`)
+    } catch (error) {
+      console.error('Checkout error:', error)
+      setIsProcessing(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen py-12">
+      <div className="container mx-auto px-6 lg:px-12">
+        {/* Back Button */}
+        <Link 
+          href="/shop" 
+          className="inline-flex items-center text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors mb-8"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Shop
+        </Link>
+
+        {/* Page Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-serif font-light mb-4">Checkout</h1>
+          <p className="text-allure-charcoal/70">Complete your order</p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left Column - Forms */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Shipping Information */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="luxury-border p-8"
+              >
+                <h2 className="text-2xl font-serif mb-6">Shipping Information</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <label className="block text-sm mb-2">Full Name *</label>
+                    <Input
+                      required
+                      value={formData.shipping.fullName}
+                      onChange={(e) => handleInputChange('shipping', 'fullName', e.target.value)}
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">Email *</label>
+                    <Input
+                      required
+                      type="email"
+                      value={formData.shipping.email}
+                      onChange={(e) => handleInputChange('shipping', 'email', e.target.value)}
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">Phone *</label>
+                    <Input
+                      required
+                      type="tel"
+                      value={formData.shipping.phone}
+                      onChange={(e) => handleInputChange('shipping', 'phone', e.target.value)}
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm mb-2">Address Line 1 *</label>
+                    <Input
+                      required
+                      value={formData.shipping.addressLine1}
+                      onChange={(e) => handleInputChange('shipping', 'addressLine1', e.target.value)}
+                      placeholder="123 Main Street"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm mb-2">Address Line 2</label>
+                    <Input
+                      value={formData.shipping.addressLine2}
+                      onChange={(e) => handleInputChange('shipping', 'addressLine2', e.target.value)}
+                      placeholder="Apt 4B (optional)"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">City *</label>
+                    <Input
+                      required
+                      value={formData.shipping.city}
+                      onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
+                      placeholder="New York"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">State *</label>
+                    <Input
+                      required
+                      value={formData.shipping.state}
+                      onChange={(e) => handleInputChange('shipping', 'state', e.target.value)}
+                      placeholder="NY"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">Postal Code *</label>
+                    <Input
+                      required
+                      value={formData.shipping.postalCode}
+                      onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
+                      placeholder="10001"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2">Country *</label>
+                    <Input
+                      required
+                      value={formData.shipping.country}
+                      onChange={(e) => handleInputChange('shipping', 'country', e.target.value)}
+                      placeholder="United States"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Payment Information */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="luxury-border p-8"
+              >
+                <h2 className="text-2xl font-serif mb-6">Payment Method</h2>
+                <div className="bg-allure-taupe/10 luxury-border p-6 text-center">
+                  <CreditCard className="h-12 w-12 mx-auto mb-4 text-allure-charcoal/50" />
+                  <p className="text-allure-charcoal/70 mb-2">Stripe Integration</p>
+                  <p className="text-sm text-allure-charcoal/50">
+                    Payment processing will be added in the next step
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column - Order Summary */}
+            <div className="lg:col-span-1">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="luxury-border p-6 sticky top-24"
+              >
+                <h2 className="text-xl font-serif mb-6">Order Summary</h2>
+                
+                {/* Cart Items */}
+                <div className="space-y-4 mb-6 pb-6 border-b border-allure-taupe/30">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex gap-3">
+                      <div className="w-16 h-16 luxury-border bg-allure-taupe/10 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{item.product.name}</p>
+                        <p className="text-xs text-allure-charcoal/60">Qty: {item.quantity}</p>
+                      </div>
+                      <p className="text-sm font-medium">
+                        {formatCurrency(item.product.price * item.quantity)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pricing Breakdown */}
+                <div className="space-y-3 mb-6 pb-6 border-b border-allure-taupe/30">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-allure-charcoal/70">Subtotal</span>
+                    <span>{formatCurrency(subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-allure-charcoal/70">Shipping</span>
+                    <span>{shipping === 0 ? 'FREE' : formatCurrency(shipping)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-allure-charcoal/70">Tax</span>
+                    <span>{formatCurrency(tax)}</span>
+                  </div>
+                </div>
+
+                {/* Total */}
+                <div className="flex justify-between text-lg font-medium mb-6">
+                  <span>Total</span>
+                  <span>{formatCurrency(total)}</span>
+                </div>
+
+                {/* Free Shipping Notice */}
+                {shipping > 0 && (
+                  <p className="text-xs text-allure-charcoal/60 mb-6 text-center">
+                    Add {formatCurrency(100 - subtotal)} more for free shipping
+                  </p>
+                )}
+
+                {/* Place Order Button */}
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full mb-4"
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? (
+                    <>Processing...</>
+                  ) : (
+                    <>
+                      <Lock className="mr-2 h-4 w-4" />
+                      Place Order
+                    </>
+                  )}
+                </Button>
+
+                <p className="text-xs text-allure-charcoal/50 text-center">
+                  Your payment information is secure and encrypted
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}

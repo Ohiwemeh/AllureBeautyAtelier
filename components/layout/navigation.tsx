@@ -1,15 +1,25 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ShoppingBag, User, Search } from "lucide-react"
+import { ShoppingBag, User, Search, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { useCartStore } from "@/lib/store/cart-store"
+import { CartDrawer } from "@/components/cart/cart-drawer"
 
 export default function Navigation() {
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const itemCount = useCartStore((state) => state.getItemCount())
 
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
+    <>
+    <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     <motion.header 
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -59,13 +69,24 @@ export default function Navigation() {
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
+            <Button variant="ghost" size="icon" className="rounded-full" asChild>
+              <Link href="/wishlist">
+                <Heart className="h-5 w-5" />
+                <span className="sr-only">Wishlist</span>
+              </Link>
+            </Button>
             <Button variant="ghost" size="icon" className="rounded-full">
               <User className="h-5 w-5" />
               <span className="sr-only">Account</span>
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="rounded-full relative"
+              onClick={() => setIsCartOpen(true)}
+            >
               <ShoppingBag className="h-5 w-5" />
-              {itemCount > 0 && (
+              {isMounted && itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-allure-gold text-[10px] font-medium text-white flex items-center justify-center">
                   {itemCount}
                 </span>
@@ -76,5 +97,6 @@ export default function Navigation() {
         </div>
       </div>
     </motion.header>
+    </>
   )
 }

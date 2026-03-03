@@ -1,0 +1,114 @@
+"use client"
+
+import { Suspense } from "react"
+import { motion } from "framer-motion"
+import { CheckCircle, Package, Mail, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { Button } from "@/components/ui/button"
+
+function ConfirmationContent() {
+  const searchParams = useSearchParams()
+  const orderNumber = searchParams.get('order') || 'Unknown'
+
+  return (
+    <div className="min-h-screen flex items-center justify-center py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="container mx-auto px-6 lg:px-12 max-w-2xl text-center"
+      >
+        {/* Success Icon */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
+          className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-8"
+        >
+          <CheckCircle className="h-10 w-10 text-green-600" />
+        </motion.div>
+
+        {/* Heading */}
+        <h1 className="text-4xl md:text-5xl font-serif font-light mb-4">
+          Order Confirmed!
+        </h1>
+        <p className="text-lg text-allure-charcoal/80 editorial-spacing mb-8">
+          Thank you for your purchase. Your order has been received and is being processed.
+        </p>
+
+        {/* Order Number */}
+        <div className="luxury-border bg-allure-taupe/5 p-6 mb-8">
+          <p className="text-sm text-allure-charcoal/60 mb-2">Order Number</p>
+          <p className="text-2xl font-serif tracking-wider">{orderNumber}</p>
+        </div>
+
+        {/* Info Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="luxury-border p-6 text-left">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-allure-gold/10 rounded-full">
+                <Mail className="h-5 w-5 text-allure-gold" />
+              </div>
+              <div>
+                <h3 className="font-medium mb-1">Confirmation Email</h3>
+                <p className="text-sm text-allure-charcoal/70">
+                  A confirmation email has been sent to your email address with order details.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="luxury-border p-6 text-left">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-allure-gold/10 rounded-full">
+                <Package className="h-5 w-5 text-allure-gold" />
+              </div>
+              <div>
+                <h3 className="font-medium mb-1">Shipping</h3>
+                <p className="text-sm text-allure-charcoal/70">
+                  Your order will be shipped within 2-3 business days. Track your package via email.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button size="lg" asChild>
+            <Link href="/shop">
+              Continue Shopping
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/">
+              Return Home
+            </Link>
+          </Button>
+        </div>
+
+        {/* Support */}
+        <p className="text-sm text-allure-charcoal/60 mt-12">
+          Questions about your order?{' '}
+          <Link href="/contact" className="underline hover:text-allure-gold transition-colors">
+            Contact us
+          </Link>
+        </p>
+      </motion.div>
+    </div>
+  )
+}
+
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    }>
+      <ConfirmationContent />
+    </Suspense>
+  )
+}

@@ -1,4 +1,5 @@
-import { getProductBySlug, getProducts } from '@/lib/supabase/products'
+import { getProductBySlug } from '@/lib/supabase/products'
+import { createStaticClient } from '@/lib/supabase/static'
 import { notFound } from 'next/navigation'
 import { ProductDetailClient } from '@/components/products/product-detail-client'
 import type { Metadata } from 'next'
@@ -32,8 +33,17 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export async function generateStaticParams() {
-  const products = await getProducts()
-  return products.map((product) => ({
+  // Use static client for build-time generation (no cookies needed)
+  const supabase = createStaticClient()
+  
+  const { data: products } = await supabase
+    .from('products')
+    .select('slug')
+    .eq('is_active', true)
+  
+  if (!products) return []
+  
+  return (products as Array<{ slug: string }>).map((product) => ({
     slug: product.slug,
   }))
 }
