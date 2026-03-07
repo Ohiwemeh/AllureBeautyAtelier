@@ -1,60 +1,156 @@
 import type { QuizResponse, PersonalityType } from '@/lib/types/quiz'
 import type { Product } from '@/lib/types/product'
+import { fragranceQuestions, bodycareQuestions } from '@/lib/data/quiz-questions'
 
-export function calculatePersonalityType(responses: QuizResponse[]): PersonalityType {
-  // Aggregate all tags from responses
-  const tagCounts: Record<string, number> = {}
-  
+/**
+ * Collects all tags the user selected across their quiz responses.
+ * Works with both fragrance and body care question sets.
+ */
+export function collectResponseTags(
+  responses: QuizResponse[],
+  category: 'fragrance' | 'bodycare'
+): string[] {
+  const questions = category === 'bodycare' ? bodycareQuestions : fragranceQuestions
+  const tags: string[] = []
+
   responses.forEach(response => {
+    const question = questions.find(q => q.id === response.questionId)
+    if (!question) return
+
     response.selectedOptions.forEach(optionId => {
-      // In a real implementation, we'd look up the actual tags from the questions
-      // For now, we'll use a simplified approach
+      const option = question.options.find(o => o.id === optionId)
+      if (!option) return
+      tags.push(...option.tags)
     })
   })
 
-  // Determine personality type based on dominant tags
-  const tags = Object.keys(tagCounts)
-  
-  if (tags.includes('sophisticated') && tags.includes('minimal')) {
-    return 'sophisticated_minimalist'
-  } else if (tags.includes('bold') && tags.includes('adventurous')) {
-    return 'bold_adventurer'
-  } else if (tags.includes('gentle') && tags.includes('romantic')) {
-    return 'gentle_romantic'
-  } else if (tags.includes('fresh') && tags.includes('natural')) {
-    return 'fresh_natural'
-  } else if (tags.includes('warm') && tags.includes('sensual')) {
-    return 'warm_sensual'
-  } else {
-    return 'elegant_classic'
+  return tags
+}
+
+/**
+ * Maps collected tags to a personality archetype.
+ * For fragrance: maps scent-family tags to aura types.
+ * For body care: maps skin-need tags to care profiles.
+ */
+export function calculatePersonalityType(
+  responses: QuizResponse[],
+  category: 'fragrance' | 'bodycare' = 'fragrance'
+): PersonalityType {
+  const tags = collectResponseTags(responses, category)
+  const tagCounts: Record<string, number> = {}
+  tags.forEach(tag => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1
+  })
+
+  if (category === 'bodycare') {
+    // Body care profiles
+    const scored: { type: PersonalityType; score: number }[] = [
+      {
+        type: 'warm_sensual',
+        score: (tagCounts['deep_hydration'] || 0) + (tagCounts['body_butter'] || 0) +
+               (tagCounts['body_oil'] || 0) + (tagCounts['shea_butter'] || 0) +
+               (tagCounts['thick_cream'] || 0) + (tagCounts['ceramides'] || 0),
+      },
+      {
+        type: 'fresh_natural',
+        score: (tagCounts['antioxidant'] || 0) + (tagCounts['purifying'] || 0) +
+               (tagCounts['exfoliant'] || 0) + (tagCounts['gel_lotion'] || 0) +
+               (tagCounts['squalane'] || 0) + (tagCounts['water_cream'] || 0) +
+               (tagCounts['lightweight'] || 0),
+      },
+      {
+        type: 'bold_adventurer',
+        score: (tagCounts['aha_bha'] || 0) + (tagCounts['body_serum'] || 0) +
+               (tagCounts['resurfacing'] || 0) + (tagCounts['exfoliating_scrub'] || 0) +
+               (tagCounts['lactic_acid'] || 0) + (tagCounts['shimmer_oil'] || 0) +
+               (tagCounts['illuminating'] || 0) + (tagCounts['radiance'] || 0),
+      },
+      {
+        type: 'gentle_romantic',
+        score: (tagCounts['aloe'] || 0) + (tagCounts['soothing'] || 0) +
+               (tagCounts['colloidal_oatmeal'] || 0) + (tagCounts['fragrance_free'] || 0) +
+               (tagCounts['calming'] || 0) + (tagCounts['vitamin_c'] || 0),
+      },
+      {
+        type: 'sophisticated_minimalist',
+        score: (tagCounts['smoothing'] || 0) + (tagCounts['lightweight'] || 0) +
+               (tagCounts['squalane'] || 0),
+      },
+      { type: 'elegant_classic', score: 0 },
+    ]
+
+    scored.sort((a, b) => b.score - a.score)
+    return scored[0].score > 0 ? scored[0].type : 'gentle_romantic'
   }
+
+  // Fragrance personality mapping
+  const scored: { type: PersonalityType; score: number }[] = [
+    {
+      type: 'fresh_natural',
+      score: (tagCounts['fresh'] || 0) + (tagCounts['citrus'] || 0) +
+             (tagCounts['aldehydic'] || 0) + (tagCounts['green'] || 0) +
+             (tagCounts['bergamot'] || 0) + (tagCounts['neroli'] || 0) +
+             (tagCounts['iris'] || 0) + (tagCounts['musk'] || 0) +
+             (tagCounts['white_tea'] || 0),
+    },
+    {
+      type: 'warm_sensual',
+      score: (tagCounts['oriental'] || 0) + (tagCounts['spicy'] || 0) +
+             (tagCounts['gourmand'] || 0) + (tagCounts['amber'] || 0) +
+             (tagCounts['skin_scent'] || 0) + (tagCounts['warm'] || 0) +
+             (tagCounts['coffee'] || 0) + (tagCounts['vanilla'] || 0),
+    },
+    {
+      type: 'bold_adventurer',
+      score: (tagCounts['woody'] || 0) + (tagCounts['smoky'] || 0) +
+             (tagCounts['oud'] || 0) + (tagCounts['patchouli'] || 0) +
+             (tagCounts['dark_rose'] || 0) + (tagCounts['cedar'] || 0) +
+             (tagCounts['vetiver'] || 0) + (tagCounts['oakmoss'] || 0) +
+             (tagCounts['pine'] || 0),
+    },
+    {
+      type: 'gentle_romantic',
+      score: (tagCounts['soft_floral'] || 0) + (tagCounts['powdery'] || 0) +
+             (tagCounts['white_floral'] || 0) + (tagCounts['jasmine'] || 0) +
+             (tagCounts['vanilla'] || 0),
+    },
+    {
+      type: 'sophisticated_minimalist',
+      score: (tagCounts['musk'] || 0) + (tagCounts['iris'] || 0) +
+             (tagCounts['white_tea'] || 0) + (tagCounts['aldehydic'] || 0),
+    },
+    { type: 'elegant_classic', score: 0 },
+  ]
+
+  scored.sort((a, b) => b.score - a.score)
+  return scored[0].score > 0 ? scored[0].type : 'elegant_classic'
 }
 
 export function getPersonalityDescription(type: PersonalityType): { title: string; description: string } {
   const descriptions = {
     sophisticated_minimalist: {
-      title: 'The Sophisticated Minimalist',
-      description: 'You appreciate quality over quantity. Your refined taste gravitates toward clean, timeless fragrances with exceptional craftsmanship. Less is more, but it must be perfect.',
+      title: 'The Refined Purist',
+      description: 'You gravitate toward precision and clarity. Clean, architectural scents and streamlined rituals speak to your discerning eye. Every detail is intentional, nothing is wasted.',
     },
     bold_adventurer: {
-      title: 'The Bold Adventurer',
-      description: 'You embrace the extraordinary and aren\'t afraid to stand out. Your fragrance choices are daring, unique, and make a statement. Convention is just a suggestion.',
+      title: 'The Dark Romantic',
+      description: 'Depth and mystery define your aura. You are drawn to the raw, the smoky, and the untamed — scents and textures that leave an unforgettable impression in your wake.',
     },
     gentle_romantic: {
-      title: 'The Gentle Romantic',
-      description: 'You find beauty in softness and elegance. Classic florals and delicate compositions speak to your nurturing, romantic soul. Timeless grace is your signature.',
+      title: 'The Soft Sensualist',
+      description: 'You move through the world with grace and gentleness. Florals, powdery warmth, and soothing textures wrap around you like poetry. Your beauty is quiet but magnetic.',
     },
     fresh_natural: {
-      title: 'The Fresh Naturalist',
-      description: 'You seek purity and authenticity in all things. Clean, crisp scents that evoke nature and wellness resonate with your organic, effortless approach to beauty.',
+      title: 'The Luminous Free Spirit',
+      description: 'Bright, vital, and effortlessly alive. You are drawn to scents of sunlight on skin, crisp linens, and morning air. Your energy is infectious and clean.',
     },
     warm_sensual: {
-      title: 'The Warm Sensualist',
-      description: 'You embrace indulgence and sensory pleasure. Rich, enveloping fragrances with depth and warmth reflect your appreciation for luxury and intimate moments.',
+      title: 'The Velvet Indulgent',
+      description: 'Luxury is your love language. Rich ambers, opulent textures, and deep nourishment — you believe in wrapping yourself in warmth and never apologizing for pleasure.',
     },
     elegant_classic: {
-      title: 'The Elegant Classic',
-      description: 'You embody timeless sophistication. Your choices are refined, balanced, and versatile. You appreciate heritage, quality, and enduring style.',
+      title: 'The Timeless Muse',
+      description: 'You embody enduring sophistication. Balanced, refined, and versatile — your choices transcend trends and speak to a heritage of impeccable taste.',
     },
   }
 
@@ -64,27 +160,37 @@ export function getPersonalityDescription(type: PersonalityType): { title: strin
 export function matchProducts(
   products: Product[],
   responses: QuizResponse[],
-  personalityType: PersonalityType
+  personalityType: PersonalityType,
+  category: 'fragrance' | 'bodycare' = 'fragrance'
 ): Product[] {
-  // Simple matching based on personality tags in products
+  const responseTags = collectResponseTags(responses, category)
   const personalityTags = getPersonalityTags(personalityType)
-  
+  const allSearchTags = Array.from(new Set([...responseTags, ...personalityTags]))
+
   const scoredProducts = products.map(product => {
     let score = 0
-    
-    // Match personality tags
+
+    // Match against product personality_tags
     if (product.personality_tags) {
-      personalityTags.forEach(tag => {
+      allSearchTags.forEach(tag => {
         if (product.personality_tags?.includes(tag)) {
           score += 2
         }
       })
     }
-    
+
+    // Also match against product description keywords
+    const desc = (product.description || '').toLowerCase()
+    responseTags.forEach(tag => {
+      const keyword = tag.replace(/_/g, ' ')
+      if (desc.includes(keyword)) {
+        score += 1
+      }
+    })
+
     return { product, score }
   })
 
-  // Sort by score and return top matches
   return scoredProducts
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
@@ -94,13 +200,13 @@ export function matchProducts(
 
 function getPersonalityTags(type: PersonalityType): string[] {
   const tagMap = {
-    sophisticated_minimalist: ['sophisticated', 'minimal', 'elegant'],
-    bold_adventurer: ['bold', 'unique', 'daring'],
-    gentle_romantic: ['gentle', 'romantic', 'calming'],
-    fresh_natural: ['fresh', 'natural', 'pure'],
-    warm_sensual: ['warm', 'sensual', 'indulgent'],
-    elegant_classic: ['elegant', 'sophisticated', 'balanced'],
+    sophisticated_minimalist: ['iris', 'musk', 'white_tea', 'aldehydic', 'clean', 'lightweight'],
+    bold_adventurer: ['woody', 'smoky', 'oud', 'patchouli', 'dark_rose', 'aha_bha', 'resurfacing'],
+    gentle_romantic: ['soft_floral', 'powdery', 'jasmine', 'vanilla', 'soothing', 'calming'],
+    fresh_natural: ['fresh', 'citrus', 'green', 'bergamot', 'antioxidant', 'gel_lotion'],
+    warm_sensual: ['oriental', 'amber', 'gourmand', 'warm', 'body_oil', 'shea_butter', 'deep_hydration'],
+    elegant_classic: ['balanced', 'versatile', 'refined'],
   }
-  
+
   return tagMap[type]
 }

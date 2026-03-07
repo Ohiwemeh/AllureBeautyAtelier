@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Toast } from "@/components/ui/toast"
 import { useWishlistStore } from "@/lib/store/wishlist-store"
 import { useCartStore } from "@/lib/store/cart-store"
-import { formatCurrency } from "@/lib/utils"
+import { formatCurrency, getProductImageUrl } from "@/lib/utils"
+import type { Product } from "@/lib/types/product"
 
 export default function WishlistPage() {
   const [isMounted, setIsMounted] = useState(false)
@@ -22,7 +23,7 @@ export default function WishlistPage() {
     setIsMounted(true)
   }, [])
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     addToCart(product)
     setToastMessage(`${product.name} added to cart`)
     setShowToast(true)
@@ -34,15 +35,6 @@ export default function WishlistPage() {
     setToastMessage('Removed from wishlist')
     setShowToast(true)
     setTimeout(() => setShowToast(false), 3000)
-  }
-
-  const getImageUrl = (product: any) => {
-    if (Array.isArray(product.images) && product.images.length > 0) {
-      return typeof product.images[0] === 'string' 
-        ? product.images[0] 
-        : product.images[0].url
-    }
-    return 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=800&q=80'
   }
 
   if (!isMounted) {
@@ -105,7 +97,7 @@ export default function WishlistPage() {
                     <div className="aspect-[3/4] luxury-border overflow-hidden mb-4 bg-allure-cream/50">
                       <div 
                         className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                        style={{ backgroundImage: `url('${getImageUrl(product)}')` }}
+                        style={{ backgroundImage: `url('${getProductImageUrl(product)}')` }}
                       />
                     </div>
                   </Link>

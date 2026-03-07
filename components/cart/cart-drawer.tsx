@@ -5,7 +5,7 @@ import { X, Minus, Plus, ShoppingBag, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/lib/store/cart-store"
-import { formatCurrency } from "@/lib/utils"
+import { formatCurrency, getProductImageUrl } from "@/lib/utils"
 
 interface CartDrawerProps {
   isOpen: boolean
@@ -15,14 +15,6 @@ interface CartDrawerProps {
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, updateQuantity, removeItem, getTotal, getItemCount } = useCartStore()
 
-  const getImageUrl = (product: any) => {
-    if (Array.isArray(product.images) && product.images.length > 0) {
-      return typeof product.images[0] === 'string' 
-        ? product.images[0] 
-        : product.images[0].url
-    }
-    return 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=400&q=80'
-  }
 
   return (
     <AnimatePresence>
@@ -95,7 +87,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       >
                         <div
                           className="w-full h-full bg-cover bg-center"
-                          style={{ backgroundImage: `url('${getImageUrl(item.product)}')` }}
+                          style={{ backgroundImage: `url('${getProductImageUrl(item.product)}')` }}
                         />
                       </Link>
 

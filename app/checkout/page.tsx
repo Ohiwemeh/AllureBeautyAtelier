@@ -214,11 +214,100 @@ export default function CheckoutPage() {
                 </div>
               </motion.div>
 
-              {/* Payment Information */}
+              {/* Billing Address */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
+                className="luxury-border p-8"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-serif">Billing Address</h2>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={sameAsShipping}
+                      onChange={(e) => setSameAsShipping(e.target.checked)}
+                      className="w-4 h-4 accent-allure-gold"
+                    />
+                    <span className="text-sm text-allure-charcoal/70">Same as shipping</span>
+                  </label>
+                </div>
+                {!sameAsShipping && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div className="md:col-span-2">
+                      <label className="block text-sm mb-2">Full Name *</label>
+                      <Input
+                        required
+                        value={formData.billing.fullName}
+                        onChange={(e) => handleInputChange('billing', 'fullName', e.target.value)}
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2">Email *</label>
+                      <Input
+                        required
+                        type="email"
+                        value={formData.billing.email}
+                        onChange={(e) => handleInputChange('billing', 'email', e.target.value)}
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm mb-2">Address Line 1 *</label>
+                      <Input
+                        required
+                        value={formData.billing.addressLine1}
+                        onChange={(e) => handleInputChange('billing', 'addressLine1', e.target.value)}
+                        placeholder="123 Main Street"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2">City *</label>
+                      <Input
+                        required
+                        value={formData.billing.city}
+                        onChange={(e) => handleInputChange('billing', 'city', e.target.value)}
+                        placeholder="New York"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2">State *</label>
+                      <Input
+                        required
+                        value={formData.billing.state}
+                        onChange={(e) => handleInputChange('billing', 'state', e.target.value)}
+                        placeholder="NY"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2">Postal Code *</label>
+                      <Input
+                        required
+                        value={formData.billing.postalCode}
+                        onChange={(e) => handleInputChange('billing', 'postalCode', e.target.value)}
+                        placeholder="10001"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm mb-2">Country *</label>
+                      <Input
+                        required
+                        value={formData.billing.country}
+                        onChange={(e) => handleInputChange('billing', 'country', e.target.value)}
+                        placeholder="United States"
+                      />
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Payment Information */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
                 className="luxury-border p-8"
               >
                 <h2 className="text-2xl font-serif mb-6">Payment Method</h2>
@@ -244,9 +333,16 @@ export default function CheckoutPage() {
                 
                 {/* Cart Items */}
                 <div className="space-y-4 mb-6 pb-6 border-b border-allure-taupe/30">
-                  {items.map((item) => (
+                  {items.map((item) => {
+                    const imgUrl = Array.isArray(item.product.images) && item.product.images.length > 0
+                      ? typeof item.product.images[0] === 'string' ? item.product.images[0] : item.product.images[0].url
+                      : 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=400&q=80'
+                    return (
                     <div key={item.id} className="flex gap-3">
-                      <div className="w-16 h-16 luxury-border bg-allure-taupe/10 flex-shrink-0" />
+                      <div
+                        className="w-16 h-16 luxury-border bg-allure-taupe/10 flex-shrink-0 bg-cover bg-center"
+                        style={{ backgroundImage: `url('${imgUrl}')` }}
+                      />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.product.name}</p>
                         <p className="text-xs text-allure-charcoal/60">Qty: {item.quantity}</p>
@@ -255,7 +351,8 @@ export default function CheckoutPage() {
                         {formatCurrency(item.product.price * item.quantity)}
                       </p>
                     </div>
-                  ))}
+                    )
+                  })}
                 </div>
 
                 {/* Pricing Breakdown */}

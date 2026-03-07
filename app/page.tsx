@@ -12,11 +12,16 @@ export default function HomePage() {
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          <motion.div 
+            className="absolute inset-[-10%] bg-no-repeat"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1920&q=80')`,
+              backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1772719416/WhatsApp_Image_2026-03-02_at_22.06.22_1_rrmuv8.jpg')`,
+              backgroundSize: '80%',
+              backgroundPosition: 'center',
             }}
+            initial={{ scale: 1.15, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 2.5, ease: "easeOut" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-allure-obsidian/40 via-allure-obsidian/20 to-allure-cream" />
         </div>
@@ -60,7 +65,7 @@ export default function HomePage() {
               >
                 <Link href="/quiz">
                   <Sparkles className="mr-2 h-5 w-5" />
-                  Find Your Ritual
+                  Discover Your Aura
                 </Link>
               </Button>
             </div>
@@ -155,21 +160,20 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
             >
               <p className="text-sm uppercase tracking-[0.3em] text-allure-gold mb-4">
-                Personalized Experience
+                The Allure Consultation
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">
                 Discover Your
                 <br />
-                Perfect Ritual
+                <span className="italic">Aura</span>
               </h2>
               <p className="text-lg text-allure-charcoal/80 editorial-spacing mb-8">
-                Take our interactive personality quiz and let our AI beauty consultant 
-                curate a bespoke selection tailored precisely to your unique preferences 
-                and lifestyle.
+                An immersive, AI-powered consultation that decodes your unique personality 
+                and curates a bespoke selection of scents and rituals made just for you.
               </p>
               <Button size="lg" asChild>
                 <Link href="/quiz">
-                  Begin Your Journey
+                  Begin Your Consultation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
