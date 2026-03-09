@@ -22,7 +22,7 @@ export default async function FragrancePage() {
           </h1>
           <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto">
             Artisanal scents that tell your story. Each fragrance is crafted with 
-            precision and inspired by life's most memorable moments.
+            precision and inspired by life&apos;s most memorable moments.
           </p>
         </div>
       </section>

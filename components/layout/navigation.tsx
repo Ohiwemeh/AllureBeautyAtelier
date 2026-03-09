@@ -1,12 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { ShoppingBag, User, Search, Heart, Menu, X } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ShoppingBag, User, Search, Heart, Menu, X, LogOut, Settings, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCartStore } from "@/lib/store/cart-store"
 import { CartDrawer } from "@/components/cart/cart-drawer"
+import { createClient } from "@/lib/supabase/client"
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
@@ -16,14 +18,61 @@ const navLinks = [
 ]
 
 export default function Navigation() {
+  const router = useRouter()
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
+  const [authUser, setAuthUser] = useState<{ email?: string; full_name?: string } | null>(null)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
   const itemCount = useCartStore((state) => state.getItemCount())
 
   useEffect(() => {
     setIsMounted(true)
+
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setAuthUser({
+          email: user.email,
+          full_name: user.user_metadata?.full_name || user.email?.split("@")[0],
+        })
+      }
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setAuthUser({
+          email: session.user.email,
+          full_name: session.user.user_metadata?.full_name || session.user.email?.split("@")[0],
+        })
+      } else {
+        setAuthUser(null)
+      }
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
+
+  // Close user menu on outside click
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClick)
+    return () => document.removeEventListener("mousedown", handleClick)
+  }, [])
+
+  const handleSignOut = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setAuthUser(null)
+    setIsUserMenuOpen(false)
+    router.push("/")
+    router.refresh()
+  }
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -102,6 +151,24 @@ export default function Navigation() {
                 <Heart className="h-5 w-5" />
                 Wishlist
               </Link>
+              {authUser ? (
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); handleSignOut() }}
+                  className="flex items-center gap-3 text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors"
+                >
+                  <LogOut className="h-5 w-5" />
+                  Sign out
+                </button>
+              ) : (
+                <Link
+                  href="/signin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors"
+                >
+                  <User className="h-5 w-5" />
+                  Sign in
+                </Link>
+              )}
               <p className="text-xs text-allure-charcoal/50 editorial-spacing">
                 Where luxury meets ritual.
               </p>
@@ -162,10 +229,65 @@ export default function Navigation() {
                 <span className="sr-only">Wishlist</span>
               </Link>
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full hidden sm:inline-flex">
-              <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Button>
+            {/* User / Auth */}
+            <div className="relative hidden sm:block" ref={userMenuRef}>
+              {authUser ? (
+                <>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-allure-taupe/10 transition-colors"
+                  >
+                    <div className="w-7 h-7 rounded-full bg-allure-gold/15 flex items-center justify-center">
+                      <span className="text-xs font-medium text-allure-gold">
+                        {(authUser.full_name || authUser.email || "U")[0].toUpperCase()}
+                      </span>
+                    </div>
+                    <ChevronDown className={`h-3 w-3 text-allure-charcoal/50 transition-transform ${isUserMenuOpen ? "rotate-180" : ""}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isUserMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50"
+                      >
+                        <div className="px-4 py-3 border-b border-gray-100">
+                          <p className="text-sm font-medium text-gray-900 truncate">{authUser.full_name}</p>
+                          <p className="text-xs text-gray-400 truncate">{authUser.email}</p>
+                        </div>
+                        <div className="py-1">
+                          <Link
+                            href="/wishlist"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <Heart className="h-4 w-4 text-gray-400" />
+                            Wishlist
+                          </Link>
+                          <button
+                            onClick={handleSignOut}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <LogOut className="h-4 w-4 text-gray-400" />
+                            Sign out
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              ) : (
+                <Button variant="ghost" size="icon" className="rounded-full" asChild>
+                  <Link href="/signin">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">Sign in</span>
+                  </Link>
+                </Button>
+              )}
+            </div>
             <Button 
               variant="ghost" 
               size="icon" 
