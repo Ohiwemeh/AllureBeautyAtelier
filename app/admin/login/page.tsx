@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(184,147,109,0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(183,110,121,0.08) 0%, transparent 60%)',
           }}
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}

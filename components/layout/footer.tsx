@@ -13,8 +13,8 @@ export default function Footer() {
               ALLURE
             </h2>
             <p className="text-sm text-allure-charcoal/70 editorial-spacing max-w-md">
-              Where affordable luxury meets ritual. Discover bespoke beauty through our curated 
-              collection of artisanal fragrances and body care.
+              A Nigerian beauty and personal care brand specialising in fragrances and body care 
+              essentials. Luxury personal care, accessible without compromise. Beauty, thoughtfully curated.
             </p>
           </div>
 

@@ -83,7 +83,7 @@ export default function AdminLayout({
       <div className="min-h-screen bg-allure-obsidian flex items-center justify-center">
         <motion.div
           className="w-10 h-10 rounded-full border-2 border-allure-gold/20"
-          style={{ borderTopColor: "#B8936D" }}
+          style={{ borderTopColor: "#B76E79" }}
           animate={{ rotate: 360 }}
           transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
         />

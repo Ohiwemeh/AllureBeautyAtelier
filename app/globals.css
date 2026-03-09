@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 28 28% 12%; /* Warm dark background */
-    --foreground: 35 38% 96%; /* Cream */
+    --background: 22 58% 97%; /* Warm Cream #FDF6F0 */
+    --foreground: 270 100% 16%; /* Deep Plum #350052 */
     
-    --card: 35 38% 96%;
-    --card-foreground: 0 0% 10%;
+    --card: 22 58% 97%;
+    --card-foreground: 270 100% 16%;
     
-    --popover: 35 38% 96%;
-    --popover-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 100% 16%;
     
-    --primary: 0 0% 10%; /* Obsidian */
-    --primary-foreground: 35 38% 96%;
+    --primary: 270 100% 16%; /* Deep Plum */
+    --primary-foreground: 22 58% 97%;
     
-    --secondary: 27 18% 78%; /* Taupe */
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 266 96% 88%; /* Whisper Lavender #DAC2FE */
+    --secondary-foreground: 270 100% 16%;
     
-    --muted: 27 18% 78%;
-    --muted-foreground: 0 0% 18%;
+    --muted: 266 96% 88%;
+    --muted-foreground: 270 100% 16%;
     
-    --accent: 27 38% 66%; /* Terracotta */
-    --accent-foreground: 0 0% 10%;
+    --accent: 352 32% 60%; /* Rose Gold #B76E79 */
+    --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
-    --destructive-foreground: 35 38% 96%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 27 18% 78%;
-    --input: 27 18% 78%;
-    --ring: 0 0% 10%;
+    --border: 266 96% 88%;
+    --input: 266 96% 88%;
+    --ring: 352 32% 60%;
     
     --radius: 0.25rem;
   }

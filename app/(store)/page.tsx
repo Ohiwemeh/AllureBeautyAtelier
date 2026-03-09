@@ -34,7 +34,7 @@ export default function HomePage() {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <p className="text-sm uppercase tracking-[0.3em] text-allure-cream/90 mb-6 editorial-spacing">
-              Bespoke Beauty Rituals
+              Beauty, Thoughtfully Curated
             </p>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-allure-cream mb-8 leading-tight">
               Discover Your
@@ -42,8 +42,8 @@ export default function HomePage() {
               <span className="italic">Allure</span>
             </h1>
             <p className="text-lg md:text-xl text-allure-cream/80 max-w-2xl mx-auto mb-12 editorial-spacing">
-              Where artistry meets science. Curated affordable luxury fragrances and body care 
-              designed to elevate your everyday ritual.
+              Luxury personal care, accessible without compromise. Fragrances and body care 
+              essentials for the modern professional who knows how you smell is part of how you show up.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -103,7 +103,7 @@ export default function HomePage() {
             Shop by Category
           </h2>
           <p className="text-allure-charcoal/70 editorial-spacing">
-            Meticulously crafted for your unique needs
+            Crafted for the aspirational modern professional
           </p>
         </motion.div>
 
@@ -160,7 +160,7 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
             >
               <p className="text-sm uppercase tracking-[0.3em] text-allure-gold mb-4">
-                The Allure Consultation
+                The Scent Personality Test
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">
                 Discover Your
@@ -168,8 +168,9 @@ export default function HomePage() {
                 <span className="italic">Aura</span>
               </h2>
               <p className="text-lg text-allure-charcoal/80 editorial-spacing mb-8">
-                An immersive, AI-powered consultation that decodes your unique personality 
-                and curates a bespoke selection of scents and rituals made just for you.
+                Our signature Scent Personality Test cuts through the noise of endless options 
+                and curates recommendations tailored to your unique identity and lifestyle. 
+                Leave with more than a product — leave with a scent that is unmistakably yours.
               </p>
               <Button size="lg" asChild>
                 <Link href="/quiz">
@@ -212,7 +213,7 @@ export default function HomePage() {
             </h2>
             <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto mb-8">
               Curate a personalized gift box, add a heartfelt message, and share 
-              the affordable luxury with those you cherish most.
+              the luxury with those you cherish most.
             </p>
             <Button size="lg" variant="outline" asChild>
               <Link href="/gift-curator">

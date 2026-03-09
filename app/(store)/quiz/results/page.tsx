@@ -61,7 +61,7 @@ function ResultsContent() {
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(184,147,109,0.12) 0%, transparent 60%)',
+              background: 'radial-gradient(circle, rgba(183,110,121,0.12) 0%, transparent 60%)',
             }}
             animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -266,7 +266,7 @@ export default function QuizResultsPage() {
       <div className="min-h-screen bg-allure-obsidian flex items-center justify-center">
         <motion.div
           className="w-12 h-12 rounded-full border-2 border-allure-gold/20"
-          style={{ borderTopColor: '#B8936D' }}
+          style={{ borderTopColor: '#B76E79' }}
           animate={{ rotate: 360 }}
           transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
         />

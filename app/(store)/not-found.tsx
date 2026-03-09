@@ -41,7 +41,7 @@ export default function NotFound() {
         <div 
           className="absolute inset-0 transition-transform duration-300 ease-out"
           style={{
-            backgroundImage: `radial-gradient(circle at center, #1A1A1A 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(circle at center, #350052 1px, transparent 1px)`,
             backgroundSize: '50px 50px',
             transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
           }}
@@ -100,7 +100,7 @@ export default function NotFound() {
             <motion.h1 
               className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-serif font-light leading-none"
               style={{
-                background: 'linear-gradient(135deg, #1A1A1A 0%, #B8936D 50%, #C9A689 100%)',
+                background: 'linear-gradient(135deg, #350052 0%, #B76E79 50%, #DAC2FE 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -248,7 +248,7 @@ export default function NotFound() {
       <motion.div
         className="absolute top-20 right-20 w-96 h-96 rounded-full blur-3xl opacity-20"
         style={{
-          background: 'radial-gradient(circle, #B8936D 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #B76E79 0%, transparent 70%)',
         }}
         animate={{
           scale: [1, 1.2, 1],
@@ -263,7 +263,7 @@ export default function NotFound() {
       <motion.div
         className="absolute bottom-20 left-20 w-96 h-96 rounded-full blur-3xl opacity-20"
         style={{
-          background: 'radial-gradient(circle, #C9A689 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #DAC2FE 0%, transparent 70%)',
         }}
         animate={{
           scale: [1.2, 1, 1.2],

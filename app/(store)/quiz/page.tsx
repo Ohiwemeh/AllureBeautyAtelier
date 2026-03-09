@@ -114,7 +114,7 @@ export default function QuizPage() {
           <motion.div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(184,147,109,0.15) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(183,110,121,0.15) 0%, transparent 70%)',
             }}
             animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -125,7 +125,7 @@ export default function QuizPage() {
           {/* Spinner */}
           <motion.div
             className="mx-auto mb-12 w-16 h-16 rounded-full border-2 border-allure-gold/20"
-            style={{ borderTopColor: '#B8936D' }}
+            style={{ borderTopColor: '#B76E79' }}
             animate={{ rotate: 360 }}
             transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
           />
@@ -171,7 +171,7 @@ export default function QuizPage() {
           <div
             className="absolute inset-0 opacity-30"
             style={{
-              background: 'radial-gradient(ellipse at 30% 20%, rgba(184,147,109,0.2) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(201,166,137,0.15) 0%, transparent 50%)',
+              background: 'radial-gradient(ellipse at 30% 20%, rgba(183,110,121,0.2) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(218,194,254,0.15) 0%, transparent 50%)',
             }}
           />
         </div>

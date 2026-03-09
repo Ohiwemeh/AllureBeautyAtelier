@@ -182,7 +182,7 @@ export default function SignInPage() {
             <span className="italic text-allure-gold">Personalized</span>
           </h2>
           <p className="text-allure-cream/60 editorial-spacing max-w-sm mx-auto">
-            Sign in to access your curated recommendations, saved rituals, and order history.
+            Sign in to access your curated recommendations, scent profile, and order history.
           </p>
         </motion.div>
       </div>

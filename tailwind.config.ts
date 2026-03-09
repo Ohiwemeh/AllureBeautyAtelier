@@ -52,14 +52,20 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Luxury brand colors
+        // Brand colors
         allure: {
-          cream: "#FAF7F2",
-          taupe: "#D4C7BA",
-          terracotta: "#C9A689",
-          obsidian: "#1A1A1A",
-          charcoal: "#2D2D2D",
-          gold: "#B8936D",
+          cream: "#FDF6F0",       // Warm Cream
+          lavender: "#DAC2FE",    // Whisper Lavender
+          rose: "#B76E79",        // Rose Gold (primary)
+          plum: "#350052",        // Deep Plum (secondary)
+          black: "#252525",       // Black
+          white: "#FFFFFF",       // White
+          // Legacy aliases (mapped to new palette)
+          gold: "#B76E79",
+          obsidian: "#350052",
+          charcoal: "#252525",
+          taupe: "#DAC2FE",
+          terracotta: "#B76E79",
         }
       },
       borderRadius: {
@@ -68,8 +74,8 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        serif: ['var(--font-cormorant)', 'Cormorant Garamond', 'serif'],
-        sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        serif: ['var(--font-noto-serif)', 'Noto Serif', 'serif'],
+        sans: ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
