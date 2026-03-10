@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ShoppingBag, User, Search, Heart, Menu, X, LogOut, Settings, ChevronDown } from "lucide-react"
+import { ShoppingBag, User, Search, Heart, Menu, X, LogOut, Gift, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCartStore } from "@/lib/store/cart-store"
@@ -152,13 +152,23 @@ export default function Navigation() {
                 Wishlist
               </Link>
               {authUser ? (
-                <button
-                  onClick={() => { setIsMobileMenuOpen(false); handleSignOut() }}
-                  className="flex items-center gap-3 text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors"
-                >
-                  <LogOut className="h-5 w-5" />
-                  Sign out
-                </button>
+                <>
+                  <Link
+                    href="/account/gifts"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors"
+                  >
+                    <Gift className="h-5 w-5" />
+                    Saved Gifts
+                  </Link>
+                  <button
+                    onClick={() => { setIsMobileMenuOpen(false); handleSignOut() }}
+                    className="flex items-center gap-3 text-sm text-allure-charcoal/70 hover:text-allure-gold transition-colors"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    Sign out
+                  </button>
+                </>
               ) : (
                 <Link
                   href="/signin"
@@ -266,6 +276,14 @@ export default function Navigation() {
                           >
                             <Heart className="h-4 w-4 text-gray-400" />
                             Wishlist
+                          </Link>
+                          <Link
+                            href="/account/gifts"
+                            onClick={() => setIsUserMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <Gift className="h-4 w-4 text-gray-400" />
+                            Saved Gifts
                           </Link>
                           <button
                             onClick={handleSignOut}

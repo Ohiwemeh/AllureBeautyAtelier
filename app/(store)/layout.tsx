@@ -1,5 +1,6 @@
 import Navigation from "@/components/layout/navigation"
 import Footer from "@/components/layout/footer"
+import { ChatbotWidget } from "@/components/chat/chatbot-widget"
 
 export default function StoreLayout({
   children,
@@ -13,6 +14,7 @@ export default function StoreLayout({
         {children}
       </main>
       <Footer />
+      <ChatbotWidget />
     </>
   )
 }

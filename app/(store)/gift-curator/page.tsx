@@ -1,16 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Gift, Plus, X, ArrowRight, ShoppingBag, Heart } from "lucide-react"
+import { Gift, Plus, X, ArrowRight, ShoppingBag, Heart, Save } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Toast } from "@/components/ui/toast"
+import { AuthGateModal } from "@/components/auth/auth-gate-modal"
 import { useCartStore } from "@/lib/store/cart-store"
 import { formatCurrency } from "@/lib/utils"
 import type { Product } from "@/lib/types/product"
 import { createStaticClient } from "@/lib/supabase/static"
-import { useEffect } from "react"
+import { createClient } from "@/lib/supabase/client"
 
 const MAX_SLOTS = 4
 
@@ -19,14 +21,17 @@ interface GiftBoxSlot {
 }
 
 export default function GiftCuratorPage() {
+  const router = useRouter()
   const [products, setProducts] = useState<Product[]>([])
   const [slots, setSlots] = useState<GiftBoxSlot[]>(
     Array.from({ length: MAX_SLOTS }, () => ({ product: null }))
   )
   const [giftNote, setGiftNote] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
+  const [showAuthModal, setShowAuthModal] = useState(false)
   const addToCart = useCartStore((state) => state.addItem)
 
   useEffect(() => {
@@ -90,6 +95,65 @@ export default function GiftCuratorPage() {
     setToastMessage(`${filledSlots.length} items added to cart`)
     setShowToast(true)
     setTimeout(() => setShowToast(false), 3000)
+  }
+
+  const handleSaveGift = async () => {
+    if (filledSlots.length === 0) return
+
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      setShowAuthModal(true)
+      return
+    }
+
+    setIsSaving(true)
+    try {
+      const shareToken = crypto.randomUUID().slice(0, 8)
+
+      const { data: giftBox, error: boxError } = await supabase
+        .from('gift_boxes')
+        .insert({
+          user_id: user.id,
+          title: `Gift Box — ${new Date().toLocaleDateString()}`,
+          gift_note: giftNote || null,
+          share_token: shareToken,
+        })
+        .select()
+        .single()
+
+      if (boxError || !giftBox) throw boxError
+
+      const items = filledSlots.map((slot, index) => ({
+        gift_box_id: giftBox.id,
+        product_id: slot.product!.id,
+        position: index,
+        quantity: 1,
+        product_snapshot: {
+          name: slot.product!.name,
+          price: slot.product!.price,
+          image: getImageUrl(slot.product!),
+        },
+      }))
+
+      const { error: itemsError } = await supabase
+        .from('gift_box_items')
+        .insert(items)
+
+      if (itemsError) throw itemsError
+
+      setToastMessage('Gift box saved to your account!')
+      setShowToast(true)
+      setTimeout(() => setShowToast(false), 3000)
+    } catch (error) {
+      console.error('Error saving gift:', error)
+      setToastMessage('Failed to save gift box. Please try again.')
+      setShowToast(true)
+      setTimeout(() => setShowToast(false), 3000)
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const getImageUrl = (product: Product) => {
@@ -302,6 +366,16 @@ export default function GiftCuratorPage() {
                     </Button>
                     <Button
                       size="lg"
+                      variant="secondary"
+                      className="w-full"
+                      disabled={filledSlots.length === 0 || isSaving}
+                      onClick={handleSaveGift}
+                    >
+                      <Save className="mr-2 h-5 w-5" />
+                      {isSaving ? 'Saving...' : 'Save Gift Box'}
+                    </Button>
+                    <Button
+                      size="lg"
                       variant="outline"
                       className="w-full"
                       asChild
@@ -318,6 +392,14 @@ export default function GiftCuratorPage() {
           </div>
         </section>
       </div>
+
+      <AuthGateModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        title="Save your gift box"
+        message="Sign in or create an account to save your curated gift box and access it anytime."
+        returnTo="/gift-curator"
+      />
     </>
   )
 }

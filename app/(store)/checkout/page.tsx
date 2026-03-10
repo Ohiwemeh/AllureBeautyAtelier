@@ -1,14 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ArrowLeft, CreditCard, Lock } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { AuthGateModal } from "@/components/auth/auth-gate-modal"
 import { useCartStore } from "@/lib/store/cart-store"
 import { formatCurrency, generateOrderNumber } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
 import type { CheckoutFormData } from "@/lib/types/checkout"
 
 export default function CheckoutPage() {
@@ -16,6 +18,22 @@ export default function CheckoutPage() {
   const { items, getTotal, clearCart } = useCartStore()
   const [isProcessing, setIsProcessing] = useState(false)
   const [sameAsShipping, setSameAsShipping] = useState(true)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    async function checkAuth() {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        setShowAuthModal(true)
+        setIsAuthenticated(false)
+      } else {
+        setIsAuthenticated(true)
+      }
+    }
+    checkAuth()
+  }, [])
   
   const [formData, setFormData] = useState<CheckoutFormData>({
     shipping: {
@@ -79,6 +97,12 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!isAuthenticated) {
+      setShowAuthModal(true)
+      return
+    }
+
     setIsProcessing(true)
 
     try {
@@ -409,6 +433,13 @@ export default function CheckoutPage() {
           </div>
         </form>
       </div>
+      <AuthGateModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        title="Sign in to place your order"
+        message="Please sign in or create an account to complete your purchase. This lets us send you order confirmations and track your delivery."
+        returnTo="/checkout"
+      />
     </div>
   )
 }
