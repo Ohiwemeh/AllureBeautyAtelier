@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, MapPin, Clock, Send } from "lucide-react"
+import { Mail, MapPin, Clock, Send, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -117,13 +117,19 @@ export default function ContactPage() {
                   {
                     icon: Mail,
                     title: "Email",
-                    detail: "hello@allurebeautyatelier.com",
+                    detail: "ololadeoyefusi@gmail.com",
                     sub: "We respond within 24 hours",
+                  },
+                  {
+                    icon: Phone,
+                    title: "Phone",
+                    detail: "+234 815 362 1230",
+                    sub: "Call or WhatsApp during business hours",
                   },
                   {
                     icon: MapPin,
                     title: "Location",
-                    detail: "Lagos, Nigeria",
+                    detail: "Abuja, Nigeria",
                     sub: "Online-first, shipping nationwide",
                   },
                   {
