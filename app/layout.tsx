@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Noto_Serif, Montserrat } from "next/font/google"
+import { Analytics } from '@vercel/analytics/next'
 import "./globals.css"
 import { cn } from "@/lib/utils"
 
@@ -42,6 +43,7 @@ export default function RootLayout({
     <html lang="en" className={cn(notoSerif.variable, montserrat.variable)}>
       <body className="antialiased min-h-screen flex flex-col">
         {children}
+        <Analytics />
       </body>
     </html>
   )
