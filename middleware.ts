@@ -60,9 +60,22 @@ export async function middleware(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isAdminLogin = request.nextUrl.pathname === '/admin/login'
 
-  if (isAdminRoute && !isAdminLogin && !user) {
-    const loginUrl = new URL('/admin/login', request.url)
-    return NextResponse.redirect(loginUrl)
+  if (isAdminRoute && !isAdminLogin) {
+    // Check if user is authenticated
+    if (!user) {
+      const loginUrl = new URL('/admin/login', request.url)
+      return NextResponse.redirect(loginUrl)
+    }
+
+    // Check if user is an admin (whitelist approach)
+    const adminEmails = process.env.ADMIN_EMAILS?.split(',').map(e => e.trim()) || []
+    const isAdmin = adminEmails.includes(user.email || '')
+
+    if (!isAdmin) {
+      // Redirect non-admin users to home page
+      const homeUrl = new URL('/', request.url)
+      return NextResponse.redirect(homeUrl)
+    }
   }
 
   return response
