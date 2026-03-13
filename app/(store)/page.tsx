@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-20">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <motion.div 
@@ -42,8 +42,7 @@ export default function HomePage() {
               <span className="italic">Allure</span>
             </h1>
             <p className="text-lg md:text-xl text-allure-cream/80 max-w-2xl mx-auto mb-12 editorial-spacing">
-              Luxury personal care, accessible without compromise. Fragrances and body care 
-              essentials for the modern professional who knows how you smell is part of how you show up.
+              Experience Luxury-Inspired Personal Care, Without Compromise.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -70,24 +69,24 @@ export default function HomePage() {
               </Button>
             </div>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2"
-          >
-            <div className="flex flex-col items-center gap-2 text-allure-cream/60">
-              <span className="text-xs uppercase tracking-widest">Scroll</span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-[1px] h-12 bg-allure-cream/40"
-              />
-            </div>
-          </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        >
+          <div className="flex flex-col items-center gap-2 text-white">
+            <span className="text-xs uppercase tracking-widest font-medium">Scroll</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="w-[2px] h-12 bg-white"
+            />
+          </div>
+        </motion.div>
       </section>
 
       {/* Featured Categories */}
@@ -103,7 +102,7 @@ export default function HomePage() {
             Shop by Category
           </h2>
           <p className="text-allure-charcoal/70 editorial-spacing">
-            Crafted for the aspirational modern professional
+            Find What You Love
           </p>
         </motion.div>
 
@@ -170,7 +169,7 @@ export default function HomePage() {
               <p className="text-lg text-allure-charcoal/80 editorial-spacing mb-8">
                 Our signature Scent Personality Test cuts through the noise of endless options 
                 and curates recommendations tailored to your unique identity and lifestyle. 
-                Leave with more than a product — leave with a scent that is unmistakably yours.
+                Leave with more than a product, leave with a scent that is unmistakably yours.
               </p>
               <Button size="lg" asChild>
                 <Link href="/quiz">
@@ -212,8 +211,7 @@ export default function HomePage() {
               Create the Perfect Gift
             </h2>
             <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto mb-8">
-              Curate a personalized gift box, add a heartfelt message, and share 
-              the luxury with those you cherish most.
+             Curate a personalized gift box, add a heartfelt message, and turn a simple gesture into a memorable gift.
             </p>
             <Button size="lg" variant="outline" asChild>
               <Link href="/gift-curator">
