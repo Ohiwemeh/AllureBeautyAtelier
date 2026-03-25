@@ -118,7 +118,7 @@ export default function ContactPage() {
                     icon: Mail,
                     title: "Email",
                     detail: "ololadeoyefusi@gmail.com",
-                    sub: "We respond within 24 hours",
+                    // sub: "We respond during work hours",
                   },
                   {
                     icon: Phone,
@@ -130,13 +130,13 @@ export default function ContactPage() {
                     icon: MapPin,
                     title: "Location",
                     detail: "Abuja, Nigeria",
-                    sub: "Online-first, shipping nationwide",
+                    sub: "Shipping nationwide",
                   },
                   {
                     icon: Clock,
                     title: "Hours",
-                    detail: "Mon - Fri: 9am - 6pm WAT",
-                    sub: "Weekend inquiries answered Monday",
+                    detail: "Mon - Fri: 9am - 6pm WAT Saturday: 10am - 5pm WAT",
+                    
                   },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-4 luxury-border p-6">

@@ -6,24 +6,22 @@ export default function Footer() {
   return (
     <footer className="luxury-border border-b-0 border-l-0 border-r-0 bg-allure-cream mt-32">
       <div className="container mx-auto px-6 lg:px-12 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <h2 className="text-2xl font-serif font-light tracking-wider mb-4">
-              ALLURE
-            </h2>
-            <p className="text-sm text-allure-charcoal/70 editorial-spacing max-w-md">
-              A Nigerian beauty and personal care brand specialising in fragrances and body care 
-              essentials. Luxury personal care, accessible without compromise. Beauty, thoughtfully curated.
-            </p>
-          </div>
+        {/* Brand */}
+        <div className="text-center mb-12">
+          <h2 className="font-serif font-light tracking-wider mb-3">
+            <span className="text-4xl italic">Allure</span>
+            <br />
+            <span className="text-xs uppercase tracking-[0.4em] text-allure-charcoal/60">Beauty Atelier</span>
+          </h2>
+          <div className="w-12 h-[1px] bg-allure-gold/40 mx-auto mt-4" />
+        </div>
 
+        {/* Links */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 text-center">
           {/* Shop */}
           <div>
-            <h3 className="text-sm uppercase tracking-widest font-medium mb-4">
-              Shop
-            </h3>
-            <ul className="space-y-3 text-sm text-allure-charcoal/70">
+            <h3 className="text-xs uppercase tracking-[0.2em] font-medium mb-4">Shop</h3>
+            <ul className="space-y-2 text-sm text-allure-charcoal/70">
               <li>
                 <Link href="/shop/fragrance" className="hover:text-allure-gold transition-colors">
                   Fragrance
@@ -44,10 +42,8 @@ export default function Footer() {
 
           {/* Experience */}
           <div>
-            <h3 className="text-sm uppercase tracking-widest font-medium mb-4">
-              Experience
-            </h3>
-            <ul className="space-y-3 text-sm text-allure-charcoal/70">
+            <h3 className="text-xs uppercase tracking-[0.2em] font-medium mb-4">Experience</h3>
+            <ul className="space-y-2 text-sm text-allure-charcoal/70">
               <li>
                 <Link href="/quiz" className="hover:text-allure-gold transition-colors">
                   Personality Quiz
@@ -58,6 +54,13 @@ export default function Footer() {
                   Gift Curator
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="text-xs uppercase tracking-[0.2em] font-medium mb-4">Company</h3>
+            <ul className="space-y-2 text-sm text-allure-charcoal/70">
               <li>
                 <Link href="/about" className="hover:text-allure-gold transition-colors">
                   Our Story
@@ -70,24 +73,35 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="text-xs uppercase tracking-[0.2em] font-medium mb-4">Support</h3>
+            <ul className="space-y-2 text-sm text-allure-charcoal/70">
+              <li>
+                <Link href="/shipping" className="hover:text-allure-gold transition-colors">
+                  Shipping & Returns
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-allure-gold transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-allure-gold transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-allure-taupe/30 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-xs text-allure-charcoal/60 editorial-spacing">
+        <div className="pt-6 border-t border-allure-taupe/30 text-center">
+          <p className="text-xs text-allure-charcoal/50">
             © {currentYear} Allure Beauty Atelier. All rights reserved.
           </p>
-          <div className="flex space-x-6 text-xs text-allure-charcoal/60">
-            <Link href="/privacy" className="hover:text-allure-gold transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-allure-gold transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="/shipping" className="hover:text-allure-gold transition-colors">
-              Shipping & Returns
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

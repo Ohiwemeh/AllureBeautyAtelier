@@ -26,7 +26,7 @@ const categoryCards = [
     id: 'bodycare' as const,
     title: 'Body Care',
     subtitle: 'Elevate your self-care ritual',
-    description: 'Luxurious body care products tailored to your needs.',
+    description: 'Refined body care products tailored to your needs.',
     image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80',
   },
 ]
@@ -198,8 +198,7 @@ export default function QuizPage() {
               <span className="italic text-allure-gold">Aura</span>
             </h1>
             <p className="text-lg text-allure-cream/60 max-w-lg mx-auto editorial-spacing">
-              A personalized consultation to uncover the scents and rituals
-              that resonate with who you truly are.
+             Enjoy a personalized consultation designed to help you discover the scents and rituals that feel uniquely yours
             </p>
           </motion.div>
 
@@ -234,7 +233,7 @@ export default function QuizPage() {
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10">
-                  <p className="text-xs uppercase tracking-[0.3em] text-allure-gold mb-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-allure-cream mb-3">
                     {card.subtitle}
                   </p>
                   <h2 className="text-4xl md:text-5xl font-serif font-light text-allure-cream mb-3 group-hover:text-allure-gold transition-colors duration-300">

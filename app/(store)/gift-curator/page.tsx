@@ -202,7 +202,7 @@ export default function GiftCuratorPage() {
               {/* Product List (left) */}
               <div className="lg:col-span-2">
                 <h2 className="text-2xl font-serif mb-6">
-                  Choose Your Products
+                 Curate Your Favourites {/* UPDATED TEXT */}
                 </h2>
 
                 {isLoading ? (

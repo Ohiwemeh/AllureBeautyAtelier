@@ -23,9 +23,11 @@ export default function AboutPage() {
               About Allure
             </h1>
             <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto">
-              Where affordable luxury meets ritual. We believe everyone deserves 
-              to experience the transformative power of beautifully crafted 
-              fragrances and body care.
+              Allure Beauty Atelier is a Nigerian beauty and personal
+care brand specialising in fragrances and body care
+essentials. We exist to bring luxury-inspired personal care
+within reach, without compromising on quality or
+experience.
             </p>
           </motion.div>
         </div>
@@ -59,22 +61,24 @@ export default function AboutPage() {
               <h2 className="text-4xl font-serif font-light">
                 Crafted With Intention
               </h2>
+              {/* <p className="text-allure-charcoal/80 editorial-spacing">
+               
+                  INCASE WE NEED ANOTHER PARAGRAPH 
+              </p> */}
               <p className="text-allure-charcoal/80 editorial-spacing">
-                Allure Beauty Atelier was born from a simple belief: luxury 
-                should be accessible without compromise. Every product in our 
-                collection is meticulously selected for its quality, artistry, 
-                and ability to elevate the everyday.
+               Through our signature Scent Personality Test, we cut
+through the noise of endless options and curate
+recommendations tailored to each customer's unique
+identity and lifestyle. Every client leaves with more than a
+product, they leave with a scent that is unmistakably
+theirs.
+
               </p>
               <p className="text-allure-charcoal/80 editorial-spacing">
-                We partner with artisan creators who share our passion for 
-                exceptional ingredients and timeless formulations. The result 
-                is a curated collection that feels deeply personal yet 
-                universally elegant.
-              </p>
-              <p className="text-allure-charcoal/80 editorial-spacing">
-                From our signature fragrances to our indulgent body care 
-                rituals, every product tells a story and invites you to 
-                discover yours.
+               We speak to the Aspirational Modern Professional,
+someone who understands that how you smell is part of
+how you show up in the world.
+{/* Beauty, thoughtfully curated. */}
               </p>
             </motion.div>
           </div>

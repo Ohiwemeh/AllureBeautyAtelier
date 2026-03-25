@@ -39,7 +39,7 @@ export default function HomePage() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-allure-cream mb-8 leading-tight">
               Discover Your
               <br />
-              <span className="italic">Allure</span>
+              <span className="italic">Aura</span>
             </h1>
             <p className="text-lg md:text-xl text-allure-cream/80 max-w-2xl mx-auto mb-12 editorial-spacing">
               Experience Luxury-Inspired Personal Care, Without Compromise.
@@ -102,7 +102,7 @@ export default function HomePage() {
             Shop by Category
           </h2>
           <p className="text-allure-charcoal/70 editorial-spacing">
-            Find What You Love
+            Find What Feels Like You
           </p>
         </motion.div>
 
@@ -162,9 +162,9 @@ export default function HomePage() {
                 The Scent Personality Test
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-light mb-6">
-                Discover Your
+                Embrace Your
                 <br />
-                <span className="italic">Aura</span>
+                <span className="italic">Allure</span>
               </h2>
               <p className="text-lg text-allure-charcoal/80 editorial-spacing mb-8">
                 Our signature Scent Personality Test cuts through the noise of endless options 
@@ -211,7 +211,7 @@ export default function HomePage() {
               Create the Perfect Gift
             </h2>
             <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto mb-8">
-             Curate a personalized gift box, add a heartfelt message, and turn a simple gesture into a memorable gift.
+             Curate a personalized gift box, infuse it with a heartfelt message, and transform a simple gesture into a cherished memory.
             </p>
             <Button size="lg" variant="outline" asChild>
               <Link href="/gift-curator">
