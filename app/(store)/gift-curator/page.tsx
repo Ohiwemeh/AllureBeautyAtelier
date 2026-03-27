@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Gift, Plus, X, ArrowRight, ShoppingBag, Heart, Save } from "lucide-react"
+import { Gift, Plus, X, ArrowRight, ShoppingBag, Heart, Save, Trash2, Edit2, Check } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -14,25 +14,52 @@ import type { Product } from "@/lib/types/product"
 import { createStaticClient } from "@/lib/supabase/static"
 import { createClient } from "@/lib/supabase/client"
 
-const MAX_SLOTS = 4
+const BOX_SIZE_OPTIONS = [2, 4, 6, 8, 10] as const
+type BoxSize = typeof BOX_SIZE_OPTIONS[number]
 
 interface GiftBoxSlot {
   product: Product | null
 }
 
+interface GiftBox {
+  id: string
+  name: string
+  slots: GiftBoxSlot[]
+  giftNote: string
+  size: BoxSize
+}
+
 export default function GiftCuratorPage() {
   const router = useRouter()
   const [products, setProducts] = useState<Product[]>([])
-  const [slots, setSlots] = useState<GiftBoxSlot[]>(
-    Array.from({ length: MAX_SLOTS }, () => ({ product: null }))
-  )
-  const [giftNote, setGiftNote] = useState("")
+  const [boxes, setBoxes] = useState<GiftBox[]>([
+    {
+      id: crypto.randomUUID(),
+      name: "Gift Box 1",
+      slots: Array.from({ length: 4 }, () => ({ product: null })),
+      giftNote: "",
+      size: 4,
+    },
+  ])
+  const [activeBoxId, setActiveBoxId] = useState<string>("")
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState("")
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [editingBoxId, setEditingBoxId] = useState<string | null>(null)
+  const [editingBoxName, setEditingBoxName] = useState("")
   const addToCart = useCartStore((state) => state.addItem)
+
+  const activeBox = boxes.find((b) => b.id === activeBoxId) || boxes[0]
+  const slots = activeBox.slots
+  const giftNote = activeBox.giftNote
+
+  useEffect(() => {
+    if (!activeBoxId && boxes.length > 0) {
+      setActiveBoxId(boxes[0].id)
+    }
+  }, [boxes, activeBoxId])
 
   useEffect(() => {
     async function loadProducts() {
@@ -57,6 +84,14 @@ export default function GiftCuratorPage() {
     0
   )
 
+  const updateActiveBox = (updates: Partial<GiftBox>) => {
+    setBoxes((prev) =>
+      prev.map((box) =>
+        box.id === activeBoxId ? { ...box, ...updates } : box
+      )
+    )
+  }
+
   const addToSlot = (product: Product) => {
     const alreadyAdded = slots.some((s) => s.product?.id === product.id)
     if (alreadyAdded) {
@@ -76,7 +111,7 @@ export default function GiftCuratorPage() {
 
     const newSlots = [...slots]
     newSlots[emptyIndex] = { product }
-    setSlots(newSlots)
+    updateActiveBox({ slots: newSlots })
     setToastMessage(`${product.name} added to gift box`)
     setShowToast(true)
     setTimeout(() => setShowToast(false), 3000)
@@ -85,7 +120,54 @@ export default function GiftCuratorPage() {
   const removeFromSlot = (index: number) => {
     const newSlots = [...slots]
     newSlots[index] = { product: null }
-    setSlots(newSlots)
+    updateActiveBox({ slots: newSlots })
+  }
+
+  const changeBoxSize = (newSize: BoxSize) => {
+    const currentSlots = [...slots]
+    if (newSize > currentSlots.length) {
+      // Add empty slots
+      const additionalSlots = Array.from(
+        { length: newSize - currentSlots.length },
+        () => ({ product: null })
+      )
+      updateActiveBox({ size: newSize, slots: [...currentSlots, ...additionalSlots] })
+    } else {
+      // Remove slots (keep filled ones if possible)
+      const newSlots = currentSlots.slice(0, newSize)
+      updateActiveBox({ size: newSize, slots: newSlots })
+    }
+  }
+
+  const createNewBox = () => {
+    const newBox: GiftBox = {
+      id: crypto.randomUUID(),
+      name: `Gift Box ${boxes.length + 1}`,
+      slots: Array.from({ length: 4 }, () => ({ product: null })),
+      giftNote: "",
+      size: 4,
+    }
+    setBoxes((prev) => [...prev, newBox])
+    setActiveBoxId(newBox.id)
+    setToastMessage("New gift box created")
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 3000)
+  }
+
+  const deleteBox = (boxId: string) => {
+    if (boxes.length === 1) {
+      setToastMessage("You must have at least one gift box")
+      setShowToast(true)
+      setTimeout(() => setShowToast(false), 3000)
+      return
+    }
+    setBoxes((prev) => prev.filter((b) => b.id !== boxId))
+    if (activeBoxId === boxId) {
+      setActiveBoxId(boxes.find((b) => b.id !== boxId)?.id || "")
+    }
+    setToastMessage("Gift box deleted")
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 3000)
   }
 
   const handleAddAllToCart = () => {
@@ -188,8 +270,8 @@ export default function GiftCuratorPage() {
                 Gift Curator
               </h1>
               <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto">
-                Curate a personalized gift box with up to {MAX_SLOTS} products.
-                Add a heartfelt note and share the luxury.
+                Curate personalized gift boxes with 2, 4, 6, 8, or 10 products.
+                Create multiple boxes and add heartfelt notes.
               </p>
             </motion.div>
           </div>
@@ -274,10 +356,148 @@ export default function GiftCuratorPage() {
               {/* Gift Box (right) */}
               <div className="lg:col-span-1">
                 <div className="sticky top-24">
-                  <h2 className="text-2xl font-serif mb-6">Your Gift Box</h2>
+                  {/* Number of Boxes Selector */}
+                  <div className="mb-4">
+                    <label className="block text-xs text-allure-charcoal/60 mb-2">
+                      Number of Gift Boxes
+                    </label>
+                    <div className="flex gap-2 flex-wrap">
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => {
+                            if (num > boxes.length) {
+                              const newBoxes = Array.from(
+                                { length: num - boxes.length },
+                                (_, i) => ({
+                                  id: crypto.randomUUID(),
+                                  name: `Gift Box ${boxes.length + i + 1}`,
+                                  slots: Array.from({ length: 4 }, () => ({ product: null })),
+                                  giftNote: "",
+                                  size: 4 as BoxSize,
+                                })
+                              )
+                              setBoxes((prev) => [...prev, ...newBoxes])
+                            } else if (num < boxes.length) {
+                              setBoxes((prev) => prev.slice(0, num))
+                              if (!boxes.slice(0, num).find((b) => b.id === activeBoxId)) {
+                                setActiveBoxId(boxes[0].id)
+                              }
+                            }
+                          }}
+                          className={`w-9 h-9 rounded-full text-sm font-medium transition-all ${
+                            boxes.length === num
+                              ? "bg-allure-gold text-white"
+                              : "bg-allure-taupe/10 text-allure-charcoal/70 hover:bg-allure-taupe/20"
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Box Tabs */}
+                  <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                    {boxes.map((box) => (
+                      <button
+                        key={box.id}
+                        onClick={() => setActiveBoxId(box.id)}
+                        className={`px-4 py-2 text-sm rounded-full whitespace-nowrap transition-all ${
+                          box.id === activeBoxId
+                            ? "bg-allure-gold text-white"
+                            : "bg-allure-taupe/10 text-allure-charcoal/70 hover:bg-allure-taupe/20"
+                        }`}
+                      >
+                        {box.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Box Size Selector */}
+                  <div className="mb-4">
+                    <label className="block text-xs text-allure-charcoal/60 mb-2">
+                      Box Size
+                    </label>
+                    <div className="flex gap-2">
+                      {BOX_SIZE_OPTIONS.map((size) => (
+                        <button
+                          key={size}
+                          onClick={() => changeBoxSize(size)}
+                          className={`flex-1 py-2 text-sm rounded transition-all ${
+                            activeBox.size === size
+                              ? "bg-allure-obsidian text-white"
+                              : "bg-allure-taupe/10 text-allure-charcoal/70 hover:bg-allure-taupe/20"
+                          }`}
+                        >
+                          {size} items
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center mb-6">
+                    {editingBoxId === activeBoxId ? (
+                      <div className="flex items-center gap-2 flex-1">
+                        <input
+                          type="text"
+                          value={editingBoxName}
+                          onChange={(e) => setEditingBoxName(e.target.value)}
+                          className="flex-1 text-xl font-serif luxury-border bg-transparent px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-allure-gold/50"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              updateActiveBox({ name: editingBoxName })
+                              setEditingBoxId(null)
+                            } else if (e.key === 'Escape') {
+                              setEditingBoxId(null)
+                            }
+                          }}
+                        />
+                        <button
+                          onClick={() => {
+                            updateActiveBox({ name: editingBoxName })
+                            setEditingBoxId(null)
+                          }}
+                          className="p-2 text-allure-gold hover:bg-allure-gold/10 rounded-full transition-colors"
+                        >
+                          <Check className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <h2 className="text-2xl font-serif flex items-center gap-2">
+                        {activeBox.name}
+                        <button
+                          onClick={() => {
+                            setEditingBoxId(activeBoxId)
+                            setEditingBoxName(activeBox.name)
+                          }}
+                          className="p-1.5 text-allure-charcoal/40 hover:text-allure-gold hover:bg-allure-gold/10 rounded-full transition-colors"
+                          title="Rename box"
+                        >
+                          <Edit2 className="h-3.5 w-3.5" />
+                        </button>
+                      </h2>
+                    )}
+                    {boxes.length > 1 && (
+                      <button
+                        onClick={() => deleteBox(activeBoxId)}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                        title="Delete this box"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
 
                   {/* Slots */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className={`grid gap-3 mb-6 ${
+                    activeBox.size === 2 ? "grid-cols-2" :
+                    activeBox.size === 4 ? "grid-cols-2" :
+                    activeBox.size === 6 ? "grid-cols-3" :
+                    activeBox.size === 8 ? "grid-cols-4" :
+                    "grid-cols-5"
+                  }`}>
                     {slots.map((slot, index) => (
                       <div
                         key={index}
@@ -326,7 +546,7 @@ export default function GiftCuratorPage() {
                     </label>
                     <textarea
                       value={giftNote}
-                      onChange={(e) => setGiftNote(e.target.value)}
+                      onChange={(e) => updateActiveBox({ giftNote: e.target.value })}
                       rows={3}
                       placeholder="Add a personal message..."
                       className="flex w-full luxury-border bg-transparent px-4 py-3 text-sm transition-colors placeholder:text-allure-charcoal/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-allure-gold/50 resize-none"
@@ -337,7 +557,7 @@ export default function GiftCuratorPage() {
                   <div className="luxury-border p-4 mb-6 bg-allure-taupe/5">
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-allure-charcoal/70">
-                        {filledSlots.length} of {MAX_SLOTS} items
+                        {filledSlots.length} of {activeBox.size} items
                       </span>
                       <span className="font-medium">
                         {formatCurrency(totalPrice)}
@@ -347,7 +567,7 @@ export default function GiftCuratorPage() {
                       <div
                         className="h-full bg-allure-gold transition-all duration-300 rounded-full"
                         style={{
-                          width: `${(filledSlots.length / MAX_SLOTS) * 100}%`,
+                          width: `${(filledSlots.length / activeBox.size) * 100}%`,
                         }}
                       />
                     </div>
@@ -381,7 +601,7 @@ export default function GiftCuratorPage() {
                       asChild
                     >
                       <Link href="/shop">
-                        Browse More Products
+                        View Full Collection
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Link>
                     </Button>
