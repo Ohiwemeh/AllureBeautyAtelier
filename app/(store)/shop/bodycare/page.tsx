@@ -1,5 +1,5 @@
 import { getProductsByCategory } from '@/lib/supabase/products'
-import { ProductCard } from '@/components/products/product-card'
+import { BodyCareFilter } from '@/components/products/body-care-filter'
 
 export const metadata = {
   title: 'Body Care | Allure Beauty Atelier',
@@ -21,13 +21,13 @@ export default async function BodyCarePage() {
             Body Care
           </h1>
           <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto">
-            Affordable luxury rituals from head to toe. Transform your daily routine 
+            Affordable luxury rituals from head to toe. Transform your daily routine
             into a moment of indulgence.
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
+      {/* Products + Filter */}
       <section className="py-16 container mx-auto px-6 lg:px-12">
         {products.length === 0 ? (
           <div className="text-center py-20">
@@ -37,11 +37,7 @@ export default async function BodyCarePage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} />
-            ))}
-          </div>
+          <BodyCareFilter products={products} />
         )}
       </section>
     </div>

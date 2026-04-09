@@ -33,6 +33,13 @@ export default function NewProductPage() {
     skin_type: "",
   })
 
+  const SUBCATEGORY_OPTIONS = {
+    fragrance: ["Eau de Parfum", "Eau de Toilette", "Body Mist", "Perfume Oil"],
+    bodycare: ["Body Washes", "Body Creams and Oils", "Face Sponge", "Glove Sponges", "Body Scrubs"],
+    skincare: ["Cleansers", "Moisturizers", "Serums", "Treatments"],
+    "gift-set": ["Fragrance Sets", "Body Care Sets", "Complete Sets"],
+  }
+
   const [imageUrls, setImageUrls] = useState<string[]>([""])
   const [ingredients, setIngredients] = useState<string[]>([])
   const [notes, setNotes] = useState<string[]>([])
@@ -50,6 +57,11 @@ export default function NewProductPage() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "")
       setForm((prev) => ({ ...prev, slug }))
+    }
+
+    // Clear subcategory when category changes
+    if (field === "category") {
+      setForm((prev) => ({ ...prev, subcategory: "" }))
     }
   }
 
@@ -274,12 +286,19 @@ export default function NewProductPage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Subcategory</label>
-              <Input
+              <select
                 value={form.subcategory}
                 onChange={(e) => updateField("subcategory", e.target.value)}
-                placeholder="e.g., Eau de Parfum"
-                className="bg-white"
-              />
+                disabled={!form.category}
+                className="flex h-12 w-full luxury-border bg-white px-4 py-3 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-allure-gold/50 disabled:bg-gray-50 disabled:text-gray-400"
+              >
+                <option value="">Select subcategory...</option>
+                {SUBCATEGORY_OPTIONS[form.category as keyof typeof SUBCATEGORY_OPTIONS]?.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-2">

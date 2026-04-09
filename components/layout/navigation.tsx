@@ -109,7 +109,11 @@ export default function Navigation() {
             {/* Mobile Menu Header */}
             <div className="flex items-center justify-between p-6 border-b border-allure-taupe/30">
               <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                <h2 className="text-2xl font-serif font-light tracking-wider">ALLURE</h2>
+                <img
+                  src="https://res.cloudinary.com/dufw6bsko/image/upload/q_auto/f_auto/v1775663961/ABA_Logo_Primary_Plum_pexjmf.png"
+                  alt="Allure Beauty Atelier"
+                  className="h-10 w-auto"
+                />
               </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -209,9 +213,11 @@ export default function Navigation() {
 
           {/* Logo */}
           <Link href="/" className="group">
-            <h1 className="text-2xl lg:text-3xl font-serif font-light tracking-wider text-allure-obsidian transition-colors group-hover:text-allure-gold">
-              ALLURE
-            </h1>
+            <img
+              src="https://res.cloudinary.com/dufw6bsko/image/upload/q_auto/f_auto/v1775663961/ABA_Logo_Primary_Plum_pexjmf.png"
+              alt="Allure Beauty Atelier"
+              className="h-12 lg:h-14 w-auto transition-opacity group-hover:opacity-80"
+            />
           </Link>
 
           {/* Center Navigation */}

@@ -15,9 +15,6 @@ export default async function ShopPage() {
       {/* Header */}
       <section className="py-20 bg-allure-taupe/10">
         <div className="container mx-auto px-6 lg:px-12 text-center">
-          {/* <p className="text-5xl uppercase tracking-[0.3em] text-allure-gold mb-4">
-            
-          </p> */}
           <h1 className="text-4xl md:text-5xl font-serif font-light mb-6">
             Our Collection
           </h1>
