@@ -2,20 +2,15 @@
 
 import { useState } from 'react'
 import { ProductCard } from '@/components/products/product-card'
+import type { Product } from '@/lib/types/product'
 
 const SUBCATEGORIES = [
   'All',
   'Body Washes',
   'Body Creams and Oils',
-  'Cleaning Essentials',
+  'Cleansing Essentials',
   'Body Scrubs',
 ] as const
-
-type Product = {
-  id: string
-  subcategory?: string | null
-  [key: string]: any
-}
 
 export function BodyCareFilter({ products }: { products: Product[] }) {
   const [active, setActive] = useState<string>('All')

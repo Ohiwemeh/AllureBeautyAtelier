@@ -35,7 +35,7 @@ export default function NewProductPage() {
 
   const SUBCATEGORY_OPTIONS = {
     fragrance: ["Eau de Parfum", "Eau de Toilette", "Body Mist", "Perfume Oil"],
-    bodycare: ["Body Washes", "Body Creams and Oils", "Face Sponge", "Glove Sponges", "Body Scrubs"],
+    bodycare: ["Body Washes", "Body Creams and Oils", "Cleansing Essentials", "Body Scrubs"],
     skincare: ["Cleansers", "Moisturizers", "Serums", "Treatments"],
     "gift-set": ["Fragrance Sets", "Body Care Sets", "Complete Sets"],
   }

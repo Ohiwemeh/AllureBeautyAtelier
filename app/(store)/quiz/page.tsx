@@ -268,30 +268,6 @@ export default function QuizPage() {
         />
       </div>
 
-      {/* Step counter */}
-      <div className="fixed top-6 right-6 z-40">
-        <p className="text-xs uppercase tracking-[0.2em] text-allure-charcoal/40">
-          {currentStep + 1} / {questions.length}
-        </p>
-      </div>
-
-      {/* Back button */}
-      {currentStep > 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed top-6 left-6 z-40"
-        >
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 text-sm text-allure-charcoal/50 hover:text-allure-obsidian transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </button>
-        </motion.div>
-      )}
-
       {/* Question Area - full screen */}
       <div className="min-h-screen flex items-center justify-center px-6 py-24">
         <AnimatePresence mode="wait" custom={direction}>
@@ -400,8 +376,19 @@ export default function QuizPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: canProceed ? 1 : 0.3 }}
               transition={{ duration: 0.3 }}
-              className="mt-12 text-center"
+              className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
+              {currentStep > 0 && (
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={handleBack}
+                  className="text-base px-8 py-6"
+                >
+                  <ArrowLeft className="mr-2 h-5 w-5" />
+                  Back
+                </Button>
+              )}
               <Button
                 size="lg"
                 onClick={handleNext}
