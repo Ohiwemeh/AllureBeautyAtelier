@@ -46,7 +46,7 @@ experience.
               <div
                 className="aspect-[4/5] luxury-border bg-cover bg-center"
                 style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&q=80')`,
+                  backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1776244279/WhatsApp_Image_2026-04-10_at_23.03.00_dndroq.jpg')`,
                 }}
               />
             </motion.div>

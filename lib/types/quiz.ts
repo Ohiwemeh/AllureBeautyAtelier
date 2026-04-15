@@ -30,6 +30,10 @@ export interface QuizResult {
 }
 
 export type PersonalityType = 
+  | 'bold'
+  | 'soft'
+  | 'minimal'
+  | 'sensual'
   | 'sophisticated_minimalist'
   | 'bold_adventurer'
   | 'gentle_romantic'

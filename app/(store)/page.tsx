@@ -94,7 +94,7 @@ export default function HomePage() {
             {
               title: "Fragrance",
               description: "Artisanal scents that tell your story",
-              image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=800&q=80",
+              image: "https://res.cloudinary.com/dufw6bsko/image/upload/v1776244280/WhatsApp_Image_2026-04-10_at_23.03.01_xbmmcc.jpg",
               href: "/shop/fragrance"
             },
             {
