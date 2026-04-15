@@ -128,13 +128,29 @@ export function calculatePersonalityType(
 
 export function getPersonalityDescription(type: PersonalityType): { title: string; description: string } {
   const descriptions = {
+    bold: {
+      title: 'The Bold Leader',
+      description: 'You command attention with confidence and strength. Powerful scents and decisive choices define your presence. You make statements, not suggestions.',
+    },
+    soft: {
+      title: 'The Gentle Soul',
+      description: 'You approach life with grace and tenderness. Soft florals and comforting textures reflect your nurturing spirit. Your beauty is subtle yet unforgettable.',
+    },
+    minimal: {
+      title: 'The Minimalist',
+      description: 'You believe in less is more. Clean scents and streamlined products speak to your refined taste. Your elegance lies in simplicity and intention.',
+    },
+    sensual: {
+      title: 'The Sensual Muse',
+      description: 'You embrace warmth and intimacy. Rich textures and inviting scents create your magnetic presence. Your allure is discovered, not announced.',
+    },
     sophisticated_minimalist: {
       title: 'The Refined Purist',
       description: 'You gravitate toward precision and clarity. Clean, architectural scents and streamlined rituals speak to your discerning eye. Every detail is intentional, nothing is wasted.',
     },
     bold_adventurer: {
       title: 'The Dark Romantic',
-      description: 'Depth and mystery define your aura. You are drawn to the raw, the smoky, and the untamed — scents and textures that leave an unforgettable impression in your wake.',
+      description: 'Depth and mystery define your aura. You are drawn to raw, smoky, and untamed — scents and textures that leave an unforgettable impression in your wake.',
     },
     gentle_romantic: {
       title: 'The Soft Sensualist',
@@ -200,6 +216,10 @@ export function matchProducts(
 
 function getPersonalityTags(type: PersonalityType): string[] {
   const tagMap = {
+    bold: ['bold', 'powerful', 'statement', 'woody', 'smoky', 'assertive'],
+    soft: ['soft', 'gentle', 'romantic', 'soft_floral', 'powdery', 'comfortable'],
+    minimal: ['minimal', 'clean', 'understated', 'fresh', 'citrus', 'subtle'],
+    sensual: ['sensual', 'warm', 'inviting', 'oriental', 'amber', 'intimate'],
     sophisticated_minimalist: ['iris', 'musk', 'white_tea', 'aldehydic', 'clean', 'lightweight'],
     bold_adventurer: ['woody', 'smoky', 'oud', 'patchouli', 'dark_rose', 'aha_bha', 'resurfacing'],
     gentle_romantic: ['soft_floral', 'powdery', 'jasmine', 'vanilla', 'soothing', 'calming'],
