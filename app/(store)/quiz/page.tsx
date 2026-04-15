@@ -20,7 +20,7 @@ const categoryCards = [
     title: 'Fragrance',
     subtitle: 'Discover your signature scent',
     description: 'From bold to subtle, find fragrances that tell your story.',
-    image: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?w=800&q=80',
+    image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776244279/WhatsApp_Image_2026-04-10_at_23.03.00_1_rs3hao.jpg',
   },
   {
     id: 'bodycare' as const,
@@ -325,11 +325,12 @@ export default function QuizPage() {
                     }`}>
                       {/* Background */}
                       {option.image && (
-                        <div
-                          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                          style={{ backgroundImage: `url('${option.image}')` }}
-                        />
-                      )}
+  <img
+    src={option.image}
+    alt={option.label}
+    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+  />
+)}
 
                       {/* Overlay */}
                       <div className={`absolute inset-0 transition-all duration-500 ${

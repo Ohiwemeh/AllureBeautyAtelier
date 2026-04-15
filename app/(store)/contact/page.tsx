@@ -117,7 +117,7 @@ export default function ContactPage() {
                   {
                     icon: Mail,
                     title: "Email",
-                    detail: "ololadeoyefusi@gmail.com",
+                    detail: "helloallure.atelier@gmail.com",
                     // sub: "We respond during work hours",
                   },
                   {
