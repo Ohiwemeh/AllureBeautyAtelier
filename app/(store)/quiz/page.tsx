@@ -287,7 +287,7 @@ export default function QuizPage() {
                   Select multiple
                 </p>
               )}
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-light mb-4 leading-tight">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-serif font-light mb-4 leading-tight">
                 {currentQuestion.question}
               </h2>
               {currentQuestion.description && (

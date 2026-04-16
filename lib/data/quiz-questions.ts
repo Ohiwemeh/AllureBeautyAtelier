@@ -28,14 +28,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'minimal', 
         label: 'Sea salt, freshly washed laundry, or cut grass.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1582719478250-c89402bb73e5?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/03/61/f2/0361f27ab49f7a13f274fc35ae8525ae.jpg',
         tags: ['minimal', 'fresh', 'clean'] 
       },
       { 
         id: 'sensual', 
         label: 'Dark chocolate, warm honey, or musk.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1511381939415-e440c88218d6?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/6f/b3/0a/6fb30ad18a207ff03b09a04ffee906d1.jpg',
         tags: ['sensual', 'warm', 'gourmand'] 
       },
     ],
@@ -58,7 +58,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'soft', 
         label: 'I want to smell like a bouquet of fresh-cut flowers.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1563241527-300ecb916198?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/0f/73/5b/0f735b8cba7f689f8d3dcfe0e05a901b.jpg',
         tags: ['soft', 'moderate_projection'] 
       },
       { 
@@ -95,14 +95,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'soft', 
         label: 'A flowing dress or a soft, well-fitted knit sweater.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1515347619152-7802cb6d95da?w=600&q=80',
+        image: 'https://img.fantaskycdn.com/617551a53c503ebd85abf3117b50a3af_2056x.jpeg',
         tags: ['soft'] 
       },
       { 
         id: 'minimal', 
         label: 'A clean white tee and classic denim.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1514311548104-ae305aac4fa7?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/b7/8d/86/b78d86fa697ea554964bb8348afe2b26.jpg',
         tags: ['minimal'] 
       },
       { 
@@ -125,14 +125,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'To a boardroom or a big social event to network.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1561489413-985b06da5bee?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/dd/9f/74/dd9f74f5f13646a187a2656eeb84730f.jpg',
         tags: ['bold', 'professional'] 
       },
       { 
         id: 'soft', 
         label: 'To a brunch date or a wedding.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/35/c9/22/35c922f0e5f9298fb2f2f30835605ddc.jpg',
         tags: ['soft', 'celebratory'] 
       },
       { 
@@ -174,7 +174,7 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'soft', 
         label: 'Fresh flowers, soft music, and a slow breakfast.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1495474472207-464a518e1546?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/2e/01/06/2e0106452093b73ea9b68593b47d4d21.jpg',
         tags: ['rich_lotion', 'calming'] 
       },
       { 
@@ -204,14 +204,14 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'To a boardroom or a big social event to network.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1561489413-985b06da5bee?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/dd/9f/74/dd9f74f5f13646a187a2656eeb84730f.jpg',
         tags: ['pollution_defense', 'matte_finish'] 
       },
       { 
         id: 'soft', 
         label: 'To a brunch date or a wedding.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/35/c9/22/35c922f0e5f9298fb2f2f30835605ddc.jpg',
         tags: ['radiance', 'glow'] 
       },
       { 
@@ -248,14 +248,14 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'minute', 
         label: 'A few minutes', 
         description: 'Basic hydration.', 
-        image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/3f/33/70/3f3370605f4124f6c33e491cbc065388.jpg',
         tags: ['daily_lotion', 'ceramides'] 
       },
       { 
         id: 'ritual', 
         label: 'It is a ritual', 
         description: 'Layering and massage.', 
-        image: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6f?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776283915/WhatsApp_Image_2026-04-10_at_22.39.10_ynpb1w.jpg',
         tags: ['body_butter', 'oil'] 
       },
     ],
@@ -271,14 +271,14 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'tight', 
         label: 'Tight and dry', 
         description: 'Needs heavy moisture.', 
-        image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=600&q=80',
+        image: 'https://i.pinimg.com/736x/bf/4c/ce/bf4cce6c3de0a01566ee6ed936714b7d.jpg',
         tags: ['deep_hydration', 'shea'] 
       },
       { 
         id: 'rough', 
         label: 'Rough or bumpy', 
         description: 'Needs smoothing.', 
-        image: 'https://images.unsplash.com/photo-1607006344380-b6775a0824a7?w=600&q=80', // ✅ FIXED: body scrub/exfoliant
+        image: 'https://i.pinimg.com/1200x/59/80/04/598004288ef26767c0e0734c8c9d6d7a.jpg', // ✅ FIXED: body scrub/exfoliant
         tags: ['exfoliant', 'aha_bha'] 
       },
       { 
