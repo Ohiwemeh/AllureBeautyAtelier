@@ -28,7 +28,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'minimal', 
         label: 'Sea salt, freshly washed laundry, or cut grass.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/03/61/f2/0361f27ab49f7a13f274fc35ae8525ae.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679514/WhatsApp_Image_2026-04-16_at_19.58.11_zdtxyu.jpg',
         tags: ['minimal', 'fresh', 'clean'] 
       },
       { 
@@ -51,7 +51,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'I want people to smell me before I even enter the room.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_20.39.51_v1ecql.jpg',
         tags: ['bold', 'heavy_projection'] 
       },
       { 
@@ -72,7 +72,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'sensual', 
         label: 'I want to be "discovered". Only those close to me should smell it.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80', // ✅ FIXED: close intimate perfume scene
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_20.48.54_jxjatn.jpg', // ✅ FIXED: close intimate perfume scene
         tags: ['sensual', 'intimate_projection'] 
       },
     ],
@@ -88,14 +88,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'A sharp blazer or a tailored suit that demands attention.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_20.52.31_vomy5w.jpg',
         tags: ['bold'] 
       },
       { 
         id: 'soft', 
         label: 'A flowing dress or a soft, well-fitted knit sweater.', 
         description: '', 
-        image: 'https://img.fantaskycdn.com/617551a53c503ebd85abf3117b50a3af_2056x.jpeg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679514/WhatsApp_Image_2026-04-16_at_21.14.59_vvoe8f.jpg',
         tags: ['soft'] 
       },
       { 
@@ -109,7 +109,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'sensual', 
         label: 'Something dark, silk, or slightly mysterious.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80', // ✅ FIXED: dark moody fashion/silk
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679516/WhatsApp_Image_2026-04-16_at_21.19.22_f7su95.jpg', // ✅ FIXED: dark moody fashion/silk
         tags: ['sensual'] 
       },
     ],
@@ -125,14 +125,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'To a boardroom or a big social event to network.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/dd/9f/74/dd9f74f5f13646a187a2656eeb84730f.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679516/WhatsApp_Image_2026-04-16_at_21.21.51_geuwpw.jpg',
         tags: ['bold', 'professional'] 
       },
       { 
         id: 'soft', 
         label: 'To a brunch date or a wedding.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/35/c9/22/35c922f0e5f9298fb2f2f30835605ddc.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_21.28.46_wblm80.jpg',
         tags: ['soft', 'celebratory'] 
       },
       { 
@@ -167,28 +167,28 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'A strong espresso and checking my to-do list.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679514/WhatsApp_Image_2026-04-16_at_21.41.47_katlc5.jpg',
         tags: ['fast_absorbing', 'energizing'] 
       },
       { 
         id: 'soft', 
         label: 'Fresh flowers, soft music, and a slow breakfast.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/2e/01/06/2e0106452093b73ea9b68593b47d4d21.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679514/WhatsApp_Image_2026-04-16_at_21.45.48_izcz40.jpg',
         tags: ['rich_lotion', 'calming'] 
       },
       { 
         id: 'minimal', 
         label: 'Crisp white sheets, a cold shower, and an atmosphere of effortless calm.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_21.51.13_copedh.jpg',
         tags: ['lightweight', 'cooling'] 
       },
       { 
         id: 'sensual', 
         label: 'Soft sunlight through the curtains and the rich warmth of a silk robe.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=600&q=80',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_22.02.51_rlj235.jpg',
         tags: ['body_oil', 'luxurious'] 
       },
     ],
@@ -239,16 +239,16 @@ export const bodycareQuestions: QuizQuestion[] = [
     options: [
       { 
         id: 'instant', 
-        label: 'Under 30 seconds', 
+        label: 'Under 5 Minutes', 
         description: 'Swipe and go.', 
-        image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80', // ✅ FIXED: body mist/spray product
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_22.07.22_lxg5r1.jpg', // ✅ FIXED: body mist/spray product
         tags: ['spray', 'gel_lotion'] 
       },
       { 
         id: 'minute', 
         label: 'A few minutes', 
         description: 'Basic hydration.', 
-        image: 'https://i.pinimg.com/736x/3f/33/70/3f3370605f4124f6c33e491cbc065388.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_22.12.46_jpkzx6.jpg',
         tags: ['daily_lotion', 'ceramides'] 
       },
       { 

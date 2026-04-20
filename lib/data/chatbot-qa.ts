@@ -336,6 +336,12 @@ export const chatbotQA: ChatQA[] = [
     category: 'general',
   },
   {
+    keywords: ['contact', 'reach', 'email', 'support', 'help'],
+    question: 'what is your email?',
+    answer: 'Our email is helloallure.atelier@gmail.com.',
+    category: 'general',
+  },
+  {
     keywords: ['price', 'expensive', 'affordable', 'cost', 'budget'],
     question: 'Are your products affordable?',
     answer: 'Our mission is luxury without compromise — and that includes pricing. We work to offer premium-quality fragrances and body care at prices that are accessible. We believe everyone deserves to smell amazing without breaking the bank.',
