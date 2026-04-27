@@ -61,10 +61,6 @@ experience.
               <h2 className="text-4xl font-serif font-light">
                 Crafted With Intention
               </h2>
-              {/* <p className="text-allure-charcoal/80 editorial-spacing">
-               
-                  INCASE WE NEED ANOTHER PARAGRAPH 
-              </p> */}
               <p className="text-allure-charcoal/80 editorial-spacing">
                Through our signature Scent Personality Test, we cut
 through the noise of endless options and curate
@@ -78,7 +74,6 @@ theirs.
                We speak to the Aspirational Modern Professional,
 someone who understands that how you smell is part of
 how you show up in the world.
-{/* Beauty, thoughtfully curated. */}
               </p>
             </motion.div>
           </div>

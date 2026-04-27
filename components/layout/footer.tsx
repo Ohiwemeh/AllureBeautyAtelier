@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Instagram } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -33,8 +34,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shop/collections" className="hover:text-allure-gold transition-colors">
-                  Collections
+                <Link href="/shop" className="hover:text-allure-gold transition-colors">
+                  All Products
                 </Link>
               </li>
             </ul>
@@ -99,6 +100,17 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-allure-taupe/30 text-center">
+          <div className="flex justify-center gap-4 mb-4">
+            <a
+              href="https://www.instagram.com/allurebeautyatelier_ng?igsh=azlvdXFuYm04NWV2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full hover:bg-allure-taupe/20 transition-colors text-allure-charcoal/60 hover:text-allure-gold"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+          </div>
           <p className="text-xs text-allure-charcoal/50">
             © {currentYear} Allure Beauty Atelier. All rights reserved.
           </p>

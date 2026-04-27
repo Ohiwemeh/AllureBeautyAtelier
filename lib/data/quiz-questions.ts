@@ -14,7 +14,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'Leather, strong coffee, or woodsmoke.', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', // ✅ FIXED: rich dark espresso/coffee
+        image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', 
         tags: ['bold', 'woody', 'smoky'] 
       },
       { 
@@ -65,14 +65,14 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'minimal', 
         label: 'I want people to think, "They just smell naturally clean."', 
         description: '', 
-        image: 'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&q=80', // ✅ FIXED: fresh clean laundry/linen
+        image: 'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&q=80', 
         tags: ['minimal', 'skin_scent'] 
       },
       { 
         id: 'sensual', 
         label: 'I want to be "discovered". Only those close to me should smell it.', 
         description: '', 
-        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_20.48.54_jxjatn.jpg', // ✅ FIXED: close intimate perfume scene
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_20.48.54_jxjatn.jpg', 
         tags: ['sensual', 'intimate_projection'] 
       },
     ],
@@ -109,7 +109,7 @@ export const fragranceQuestions: QuizQuestion[] = [
         id: 'sensual', 
         label: 'Something dark, silk, or slightly mysterious.', 
         description: '', 
-        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679516/WhatsApp_Image_2026-04-16_at_21.19.22_f7su95.jpg', // ✅ FIXED: dark moody fashion/silk
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679516/WhatsApp_Image_2026-04-16_at_21.19.22_f7su95.jpg', 
         tags: ['sensual'] 
       },
     ],
@@ -204,14 +204,14 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'bold', 
         label: 'To a boardroom or a big social event to network.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/dd/9f/74/dd9f74f5f13646a187a2656eeb84730f.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679516/WhatsApp_Image_2026-04-16_at_21.21.51_geuwpw.jpg',
         tags: ['pollution_defense', 'matte_finish'] 
       },
       { 
         id: 'soft', 
         label: 'To a brunch date or a wedding.', 
         description: '', 
-        image: 'https://i.pinimg.com/736x/35/c9/22/35c922f0e5f9298fb2f2f30835605ddc.jpg',
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679513/WhatsApp_Image_2026-04-16_at_21.28.46_wblm80.jpg',
         tags: ['radiance', 'glow'] 
       },
       { 
@@ -241,7 +241,7 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'instant', 
         label: 'Under 5 Minutes', 
         description: 'Swipe and go.', 
-        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_22.07.22_lxg5r1.jpg', // ✅ FIXED: body mist/spray product
+        image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1776679515/WhatsApp_Image_2026-04-16_at_22.07.22_lxg5r1.jpg', 
         tags: ['spray', 'gel_lotion'] 
       },
       { 
@@ -278,7 +278,7 @@ export const bodycareQuestions: QuizQuestion[] = [
         id: 'rough', 
         label: 'Rough or bumpy', 
         description: 'Needs smoothing.', 
-        image: 'https://i.pinimg.com/1200x/59/80/04/598004288ef26767c0e0734c8c9d6d7a.jpg', // ✅ FIXED: body scrub/exfoliant
+        image: 'https://i.pinimg.com/1200x/59/80/04/598004288ef26767c0e0734c8c9d6d7a.jpg', 
         tags: ['exfoliant', 'aha_bha'] 
       },
       { 

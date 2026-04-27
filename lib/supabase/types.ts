@@ -221,8 +221,10 @@ export interface Database {
           discount: number
           total: number
           currency: string
-          stripe_payment_intent_id: string | null
-          stripe_customer_id: string | null
+          flw_transaction_id: string | null
+          flw_tx_ref: string | null
+          payment_status: string | null
+          payment_reference: string | null
           shipping_address: Json | null
           billing_address: Json | null
           gift_box_id: string | null
@@ -241,8 +243,10 @@ export interface Database {
           discount?: number
           total: number
           currency?: string
-          stripe_payment_intent_id?: string | null
-          stripe_customer_id?: string | null
+          flw_transaction_id?: string | null
+          flw_tx_ref?: string | null
+          payment_status?: string | null
+          payment_reference?: string | null
           shipping_address?: Json | null
           billing_address?: Json | null
           gift_box_id?: string | null
@@ -261,8 +265,10 @@ export interface Database {
           discount?: number
           total?: number
           currency?: string
-          stripe_payment_intent_id?: string | null
-          stripe_customer_id?: string | null
+          flw_transaction_id?: string | null
+          flw_tx_ref?: string | null
+          payment_status?: string | null
+          payment_reference?: string | null
           shipping_address?: Json | null
           billing_address?: Json | null
           gift_box_id?: string | null

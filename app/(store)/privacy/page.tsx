@@ -38,7 +38,7 @@ export default function PrivacyPage() {
             <p>
               We share your personal information with service providers to help us provide
               our services and fulfill our contracts with you, including payment processing
-              (Stripe) and hosting (Vercel, Supabase). We do not sell your personal data.
+              (Flutterwave) and hosting (Vercel, Supabase). We do not sell your personal data.
             </p>
           </section>
 
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
             <p>
               You have the right to access, correct, or delete your personal information.
               You may also withdraw consent for us to use your data at any time. Contact
-              us at hello@allurebeautyatelier.com for any privacy-related requests.
+              us at helloallure.atelier@gmail.com for any privacy-related requests.
             </p>
           </section>
 
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Contact</h2>
             <p>
               For more information about our privacy practices, or if you have questions,
-              please contact us at hello@allurebeautyatelier.com.
+              please contact us at helloallure.atelier@gmail.com.
             </p>
           </section>
 

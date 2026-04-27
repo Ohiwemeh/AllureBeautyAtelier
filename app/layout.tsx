@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Allure Beauty Atelier" }],
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_NG",
     url: "https://allurebeautyatelier.com",
     title: "Allure Beauty Atelier | Luxury Fragrance & Body Care",
     description: "A Nigerian beauty and personal care brand making luxury personal care accessible. Fragrances and body care essentials, thoughtfully curated.",

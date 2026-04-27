@@ -1,15 +1,93 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { CheckCircle, Package, Mail, ArrowRight } from "lucide-react"
+import { CheckCircle, Package, Mail, ArrowRight, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
 function ConfirmationContent() {
   const searchParams = useSearchParams()
-  const orderNumber = searchParams.get('order') || 'Unknown'
+  const txRef = searchParams.get('tx_ref') || searchParams.get('order') || 'Unknown'
+  const transactionId = searchParams.get('transaction_id')
+  const paymentStatus = searchParams.get('status')
+  const [isVerifying, setIsVerifying] = useState(!!transactionId)
+  const [isVerified, setIsVerified] = useState(!transactionId)
+  const [verifyError, setVerifyError] = useState<string | null>(null)
+
+  useEffect(() => {
+    // If redirected from Flutterwave with a transaction_id, verify it
+    if (transactionId) {
+      async function verify() {
+        try {
+          const res = await fetch(
+            `/api/payment/verify?transaction_id=${transactionId}&tx_ref=${txRef}`
+          )
+          const data = await res.json()
+
+          if (res.ok && data.success) {
+            setIsVerified(true)
+          } else {
+            setVerifyError(data.error || 'Payment verification failed')
+            setIsVerified(false)
+          }
+        } catch {
+          setVerifyError('Failed to verify payment. Please contact support.')
+          setIsVerified(false)
+        } finally {
+          setIsVerifying(false)
+        }
+      }
+      verify()
+    } else if (paymentStatus === 'cancelled') {
+      setVerifyError('Payment was cancelled.')
+      setIsVerified(false)
+      setIsVerifying(false)
+    }
+  }, [transactionId, txRef, paymentStatus])
+
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-allure-gold mx-auto mb-4" />
+          <p className="text-allure-charcoal/70">Verifying your payment...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isVerified) {
+    return (
+      <div className="min-h-screen flex items-center justify-center py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="container mx-auto px-6 lg:px-12 max-w-2xl text-center"
+        >
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 mb-8">
+            <AlertCircle className="h-10 w-10 text-red-600" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-serif font-light mb-4">
+            Payment Verification Failed
+          </h1>
+          <p className="text-lg text-allure-charcoal/80 mb-8">
+            {verifyError || 'We could not verify your payment. Please contact support if you were charged.'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" asChild>
+              <Link href="/contact">Contact Support</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/">Return Home</Link>
+            </Button>
+          </div>
+        </motion.div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center py-20">
@@ -40,7 +118,7 @@ function ConfirmationContent() {
         {/* Order Number */}
         <div className="luxury-border bg-allure-taupe/5 p-6 mb-8">
           <p className="text-sm text-allure-charcoal/60 mb-2">Order Number</p>
-          <p className="text-2xl font-serif tracking-wider">{orderNumber}</p>
+          <p className="text-2xl font-serif tracking-wider">{txRef}</p>
         </div>
 
         {/* Info Cards */}

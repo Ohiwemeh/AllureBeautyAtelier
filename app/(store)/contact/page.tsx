@@ -8,10 +8,34 @@ import { Input } from "@/components/ui/input"
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setIsSending(true)
+    setError(null)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
@@ -67,17 +91,32 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm mb-2">Name *</label>
-                      <Input required placeholder="Your name" />
+                      <Input
+                        required
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      />
                     </div>
                     <div>
                       <label className="block text-sm mb-2">Email *</label>
-                      <Input required type="email" placeholder="you@example.com" />
+                      <Input
+                        required
+                        type="email"
+                        placeholder="you@example.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm mb-2">Subject</label>
-                    <Input placeholder="How can we help?" />
+                    <Input
+                      placeholder="How can we help?"
+                      value={formData.subject}
+                      onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
+                    />
                   </div>
 
                   <div>
@@ -86,13 +125,19 @@ export default function ContactPage() {
                       required
                       rows={6}
                       placeholder="Tell us more..."
+                      value={formData.message}
+                      onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
                       className="flex w-full luxury-border bg-transparent px-4 py-3 text-sm transition-colors placeholder:text-allure-charcoal/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-allure-gold/50 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full md:w-auto">
+                  {error && (
+                    <p className="text-sm text-red-600">{error}</p>
+                  )}
+
+                  <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSending}>
                     <Send className="mr-2 h-4 w-4" />
-                    Send Message
+                    {isSending ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}

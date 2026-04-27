@@ -270,8 +270,7 @@ export default function GiftCuratorPage() {
                 Gift Curator
               </h1>
               <p className="text-lg text-allure-charcoal/80 editorial-spacing max-w-2xl mx-auto">
-                Curate personalized gift boxes with 2, 4, 6, 8, or 10 products.
-                Create multiple boxes and add heartfelt notes.
+                Curate personalized gift boxes with handpicked products and pair them with a heartfelt note.
               </p>
             </motion.div>
           </div>

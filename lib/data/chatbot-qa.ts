@@ -312,7 +312,7 @@ export const chatbotQA: ChatQA[] = [
   {
     keywords: ['cancel', 'cancel order'],
     question: 'Can I cancel my order?',
-    answer: 'You can cancel an order within 1 hour of placing it by contacting us immediately. Once an order enters processing or has shipped, it cannot be cancelled — but you can return it per our return policy.',
+    answer: 'You can cancel an order within 2 hour of placing it by contacting us immediately. Once an order enters processing or has shipped, it cannot be cancelled — but you can return it per our return policy.',
     category: 'orders',
   },
 

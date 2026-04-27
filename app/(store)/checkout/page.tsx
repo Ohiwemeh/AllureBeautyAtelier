@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ArrowLeft, CreditCard, Lock } from "lucide-react"
+import { ArrowLeft, CreditCard, Lock, Shield } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AuthGateModal } from "@/components/auth/auth-gate-modal"
 import { useCartStore } from "@/lib/store/cart-store"
-import { formatCurrency, generateOrderNumber } from "@/lib/utils"
+import { formatCurrency } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import type { CheckoutFormData } from "@/lib/types/checkout"
 
@@ -20,6 +20,7 @@ export default function CheckoutPage() {
   const [sameAsShipping, setSameAsShipping] = useState(true)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const [paymentError, setPaymentError] = useState<string | null>(null)
 
   useEffect(() => {
     async function checkAuth() {
@@ -45,7 +46,7 @@ export default function CheckoutPage() {
       city: '',
       state: '',
       postalCode: '',
-      country: 'US',
+      country: 'NG',
     },
     billing: {
       fullName: '',
@@ -56,29 +57,14 @@ export default function CheckoutPage() {
       city: '',
       state: '',
       postalCode: '',
-      country: 'US',
+      country: 'NG',
     },
     sameAsShipping: true,
   })
 
-  // Redirect if cart is empty
-  if (items.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-serif mb-4">Your cart is empty</h1>
-          <p className="text-allure-charcoal/70 mb-6">Add some products before checking out</p>
-          <Button asChild>
-            <Link href="/shop">Continue Shopping</Link>
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
   const subtotal = getTotal()
-  const shipping = subtotal > 100 ? 0 : 12.00
-  const tax = subtotal * 0.08 // 8% tax
+  const shipping = subtotal > 50000 ? 0 : 2000
+  const tax = subtotal * 0.075 // 7.5% VAT
   const total = subtotal + shipping + tax
 
   const handleInputChange = (
@@ -95,6 +81,44 @@ export default function CheckoutPage() {
     }))
   }
 
+  const handleFlutterwavePayment = async () => {
+    setPaymentError(null)
+
+    try {
+      // Initialize payment on the server to get a hosted checkout link
+      const initRes = await fetch('/api/payment/initialize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.shipping.email,
+          name: formData.shipping.fullName,
+          phone: formData.shipping.phone,
+          amount: total,
+          currency: 'NGN',
+          subtotal,
+          shipping,
+          tax,
+          shippingAddress: formData.shipping,
+          items: items.map(i => ({ id: i.product.id, name: i.product.name, qty: i.quantity, price: i.product.price })),
+        }),
+      })
+
+      const initData = await initRes.json()
+
+      if (!initRes.ok || !initData.link) {
+        throw new Error(initData.error || 'Failed to initialize payment')
+      }
+
+      // Clear cart and redirect user to Flutterwave's hosted checkout page
+      clearCart()
+      window.location.href = initData.link
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Payment initialization failed'
+      setPaymentError(message)
+      setIsProcessing(false)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -104,22 +128,22 @@ export default function CheckoutPage() {
     }
 
     setIsProcessing(true)
+    handleFlutterwavePayment()
+  }
 
-    try {
-      // In a real app, this would integrate with Stripe
-      // For now, we'll simulate the order creation
-      const orderNumber = generateOrderNumber()
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Clear cart and redirect to confirmation
-      clearCart()
-      router.push(`/orders/confirmation?order=${orderNumber}`)
-    } catch (error) {
-      console.error('Checkout error:', error)
-      setIsProcessing(false)
-    }
+  // Redirect if cart is empty
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-serif mb-4">Your cart is empty</h1>
+          <p className="text-allure-charcoal/70 mb-6">Add some products before checking out</p>
+          <Button asChild>
+            <Link href="/shop">Continue Shopping</Link>
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -337,11 +361,20 @@ export default function CheckoutPage() {
                 <h2 className="text-2xl font-serif mb-6">Payment Method</h2>
                 <div className="bg-allure-taupe/10 luxury-border p-6 text-center">
                   <CreditCard className="h-12 w-12 mx-auto mb-4 text-allure-charcoal/50" />
-                  <p className="text-allure-charcoal/70 mb-2">Stripe Integration</p>
+                  <p className="text-allure-charcoal/70 mb-2">Secure Payment via Flutterwave</p>
                   <p className="text-sm text-allure-charcoal/50">
-                    Payment processing will be added in the next step
+                    Card, Bank Transfer & USSD supported
                   </p>
+                  <div className="flex items-center justify-center gap-2 mt-3 text-xs text-allure-charcoal/40">
+                    <Shield className="h-3 w-3" />
+                    <span>256-bit SSL Encrypted</span>
+                  </div>
                 </div>
+                {paymentError && (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
+                    <p className="text-sm text-red-600">{paymentError}</p>
+                  </div>
+                )}
               </motion.div>
             </div>
 
@@ -404,7 +437,7 @@ export default function CheckoutPage() {
                 {/* Free Shipping Notice */}
                 {shipping > 0 && (
                   <p className="text-xs text-allure-charcoal/60 mb-6 text-center">
-                    Add {formatCurrency(100 - subtotal)} more for free shipping
+                    Add {formatCurrency(50000 - subtotal)} more for free shipping
                   </p>
                 )}
 

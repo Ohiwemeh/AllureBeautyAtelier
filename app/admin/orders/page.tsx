@@ -6,6 +6,7 @@ import { ShoppingCart, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/lib/supabase/client"
+import { formatCurrency } from "@/lib/utils"
 
 interface OrderRow {
   id: string
@@ -130,7 +131,7 @@ export default function AdminOrdersPage() {
                       </select>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm font-medium">${order.total.toFixed(2)}</span>
+                      <span className="text-sm font-medium">{formatCurrency(order.total)}</span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <Button variant="ghost" size="sm" className="text-xs">

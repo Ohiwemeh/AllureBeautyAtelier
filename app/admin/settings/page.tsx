@@ -110,7 +110,7 @@ export default function AdminSettingsPage() {
           </div>
           <div>
             <p className="text-gray-500">Currency</p>
-            <p className="font-medium">USD ($)</p>
+            <p className="font-medium">NGN (₦)</p>
           </div>
           <div>
             <p className="text-gray-500">Platform</p>
@@ -118,7 +118,7 @@ export default function AdminSettingsPage() {
           </div>
           <div>
             <p className="text-gray-500">Payments</p>
-            <p className="font-medium">Stripe</p>
+            <p className="font-medium">Flutterwave</p>
           </div>
         </div>
       </motion.div>

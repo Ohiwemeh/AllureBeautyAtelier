@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Package, ShoppingCart, Users, DollarSign, TrendingUp, Eye } from "lucide-react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
+import { formatCurrency } from "@/lib/utils"
 
 interface DashboardStats {
   totalProducts: number
@@ -83,7 +84,7 @@ export default function AdminDashboard() {
     },
     {
       label: "Revenue",
-      value: `$${stats.totalRevenue.toFixed(2)}`,
+      value: formatCurrency(stats.totalRevenue),
       icon: DollarSign,
       href: "/admin/orders",
       color: "bg-amber-500/10 text-amber-600",
@@ -169,7 +170,7 @@ export default function AdminDashboard() {
                     >
                       {order.status}
                     </span>
-                    <span className="text-sm font-medium">${order.total.toFixed(2)}</span>
+                    <span className="text-sm font-medium">{formatCurrency(order.total)}</span>
                   </div>
                 </div>
               ))

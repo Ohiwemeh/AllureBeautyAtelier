@@ -23,13 +23,13 @@ export default function ShippingPage() {
               icon: Package,
               title: "Standard Shipping",
               detail: "3-7 business days",
-              sub: "Free on orders over $100",
+              sub: "Free on orders over ₦50,000",
             },
             {
               icon: Clock,
               title: "Express Shipping",
               detail: "1-3 business days",
-              sub: "Available at checkout",
+              sub: "Rates calculated at checkout",
             },
             {
               icon: MapPin,
@@ -71,8 +71,8 @@ export default function ShippingPage() {
           <section>
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Free Shipping</h2>
             <p>
-              We offer free standard shipping on all orders over $100. For orders
-              under $100, a flat rate of $12.00 applies. Express shipping rates
+              We offer free standard shipping on all orders over ₦50,000. For orders
+              under ₦50,000, a flat rate of ₦2,000 applies. Express shipping rates
               are calculated at checkout based on your location.
             </p>
           </section>
@@ -82,7 +82,7 @@ export default function ShippingPage() {
             <p>
               We accept returns within 14 days of delivery for unused, unopened
               products in their original packaging. To initiate a return, please
-              contact our customer care team at hello@allurebeautyatelier.com with
+              contact our customer care team at helloallure.atelier@gmail.com with
               your order number.
             </p>
           </section>

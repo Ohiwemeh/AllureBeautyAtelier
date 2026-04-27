@@ -67,7 +67,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Contact</h2>
             <p>
               Questions about the Terms of Service should be sent to us at
-              hello@allurebeautyatelier.com.
+              helloallure.atelier@gmail.com.
             </p>
           </section>
 
