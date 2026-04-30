@@ -23,7 +23,7 @@ export default function ShippingPage() {
               icon: Package,
               title: "Standard Shipping",
               detail: "3-7 business days",
-              sub: "Free on orders over ₦50,000",
+              sub: "Rates Calculated at checkout",
             },
             {
               icon: Clock,
@@ -71,9 +71,8 @@ export default function ShippingPage() {
           <section>
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Free Shipping</h2>
             <p>
-              We offer free standard shipping on all orders over ₦50,000. For orders
-              under ₦50,000, a flat rate of ₦2,000 applies. Express shipping rates
-              are calculated at checkout based on your location.
+             Delivery/Shipping 
+Rates are calculated based on your location and order size, with the full cost displayed at checkout
             </p>
           </section>
 
@@ -92,7 +91,7 @@ export default function ShippingPage() {
             <p>
               Once your return is received and inspected, we will send you an email
               notification. Refunds will be processed to your original payment method
-              within 5-10 business days. Shipping costs are non-refundable.
+              within 5-7 business days. Shipping costs are non-refundable.
             </p>
           </section>
 

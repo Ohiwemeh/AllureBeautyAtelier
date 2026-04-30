@@ -44,7 +44,7 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section>
+          {/* <section>
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Accuracy of Information</h2>
             <p>
               We are not responsible if information made available on this site is not
@@ -52,7 +52,7 @@ export default function TermsPage() {
               general information only and should not be relied upon as the sole basis
               for making decisions.
             </p>
-          </section>
+          </section> */}
 
           <section>
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">User Account</h2>

@@ -241,7 +241,7 @@ export default function CheckoutPage() {
                       placeholder="NY"
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label className="block text-sm mb-2">Postal Code *</label>
                     <Input
                       required
@@ -249,7 +249,7 @@ export default function CheckoutPage() {
                       onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
                       placeholder="10001"
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <label className="block text-sm mb-2">Country *</label>
                     <Input
@@ -329,7 +329,7 @@ export default function CheckoutPage() {
                         placeholder="NY"
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <label className="block text-sm mb-2">Postal Code *</label>
                       <Input
                         required
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
                         onChange={(e) => handleInputChange('billing', 'postalCode', e.target.value)}
                         placeholder="10001"
                       />
-                    </div>
+                    </div> */}
                     <div>
                       <label className="block text-sm mb-2">Country *</label>
                       <Input
@@ -435,11 +435,11 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Free Shipping Notice */}
-                {shipping > 0 && (
+                {/* {shipping > 0 && (
                   <p className="text-xs text-allure-charcoal/60 mb-6 text-center">
                     Add {formatCurrency(50000 - subtotal)} more for free shipping
                   </p>
-                )}
+                )} */}
 
                 {/* Place Order Button */}
                 <Button

@@ -8,6 +8,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/lib/supabase/client"
+import { formatCurrency } from "@/lib/utils"
 
 interface ProductRow {
   id: string
@@ -188,7 +189,7 @@ export default function AdminProductsPage() {
                         <span className="text-sm text-gray-600 capitalize">{product.category}</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-sm font-medium">${product.price.toFixed(2)}</span>
+                        <span className="text-sm font-medium">{formatCurrency(product.price)}</span>
                       </td>
                       <td className="px-6 py-4">
                         <span

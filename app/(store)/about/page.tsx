@@ -101,19 +101,19 @@ how you show up in the world.
                 icon: Sparkles,
                 title: "Accessible Luxury",
                 description:
-                  "Premium quality without the premium price tag. We believe luxury is a feeling, not a number.",
+                  "Premium quality without the premium price tag, because true luxury is how it feels, not what it costs.",
               },
               {
                 icon: Heart,
                 title: "Personal Connection",
                 description:
-                  "Our AI-powered quiz helps you discover products that resonate with your unique personality and preferences.",
+                  "Our thoughtfully designed quiz gets to know your preferences, guiding you to products that feel effortless, personal, and true to your individuality.",
               },
               {
                 icon: Leaf,
                 title: "Conscious Beauty",
                 description:
-                  "We prioritize clean ingredients, sustainable packaging, and ethical sourcing in every product we curate.",
+                  "We source original products from brands that value quality and mindful practices, with a focus on cleaner ingredients and thoughtful packaging, so you can feel good about every choice.",
               },
             ].map((value, index) => (
               <motion.div
