@@ -13,11 +13,11 @@ export default function HomePage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <motion.div 
-            className="absolute inset-[-10%] bg-no-repeat"
+            className="absolute inset-0 sm:inset-[-10%] bg-no-repeat"
             style={{
               backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1772719416/WhatsApp_Image_2026-03-02_at_22.06.22_1_rrmuv8.jpg')`,
-              backgroundSize: '80%',
-              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
             }}
             initial={{ scale: 1.15, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

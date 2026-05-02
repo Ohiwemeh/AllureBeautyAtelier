@@ -65,16 +65,13 @@ export default function ShippingPage() {
               weekends or holidays will be processed the following business day. You
               will receive a confirmation email with tracking information once your
               order has shipped.
+
+              Delivery/Shipping 
+rates are calculated based on your location and order size, with the full cost displayed at checkout
             </p>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Free Shipping</h2>
-            <p>
-             Delivery/Shipping 
-Rates are calculated based on your location and order size, with the full cost displayed at checkout
-            </p>
-          </section>
+        
 
           <section>
             <h2 className="text-2xl font-serif mb-4 text-allure-obsidian">Returns &amp; Exchanges</h2>

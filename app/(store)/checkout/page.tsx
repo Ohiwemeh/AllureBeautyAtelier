@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AuthGateModal } from "@/components/auth/auth-gate-modal"
+import { LocationSelect } from "@/components/ui/location-select"
 import { useCartStore } from "@/lib/store/cart-store"
 import { formatCurrency } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
@@ -223,42 +224,14 @@ export default function CheckoutPage() {
                       placeholder="Apt 4B (optional)"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm mb-2">City *</label>
-                    <Input
-                      required
-                      value={formData.shipping.city}
-                      onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
-                      placeholder="New York"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm mb-2">State *</label>
-                    <Input
-                      required
-                      value={formData.shipping.state}
-                      onChange={(e) => handleInputChange('shipping', 'state', e.target.value)}
-                      placeholder="NY"
-                    />
-                  </div>
-                  {/* <div>
-                    <label className="block text-sm mb-2">Postal Code *</label>
-                    <Input
-                      required
-                      value={formData.shipping.postalCode}
-                      onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
-                      placeholder="10001"
-                    />
-                  </div> */}
-                  <div>
-                    <label className="block text-sm mb-2">Country *</label>
-                    <Input
-                      required
-                      value={formData.shipping.country}
-                      onChange={(e) => handleInputChange('shipping', 'country', e.target.value)}
-                      placeholder="United States"
-                    />
-                  </div>
+                  <LocationSelect
+                    countryValue={formData.shipping.country}
+                    stateValue={formData.shipping.state}
+                    cityValue={formData.shipping.city}
+                    onCountryChange={(v) => handleInputChange('shipping', 'country', v)}
+                    onStateChange={(v) => handleInputChange('shipping', 'state', v)}
+                    onCityChange={(v) => handleInputChange('shipping', 'city', v)}
+                  />
                 </div>
               </motion.div>
 
@@ -311,42 +284,14 @@ export default function CheckoutPage() {
                         placeholder="123 Main Street"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm mb-2">City *</label>
-                      <Input
-                        required
-                        value={formData.billing.city}
-                        onChange={(e) => handleInputChange('billing', 'city', e.target.value)}
-                        placeholder="New York"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-2">State *</label>
-                      <Input
-                        required
-                        value={formData.billing.state}
-                        onChange={(e) => handleInputChange('billing', 'state', e.target.value)}
-                        placeholder="NY"
-                      />
-                    </div>
-                    {/* <div>
-                      <label className="block text-sm mb-2">Postal Code *</label>
-                      <Input
-                        required
-                        value={formData.billing.postalCode}
-                        onChange={(e) => handleInputChange('billing', 'postalCode', e.target.value)}
-                        placeholder="10001"
-                      />
-                    </div> */}
-                    <div>
-                      <label className="block text-sm mb-2">Country *</label>
-                      <Input
-                        required
-                        value={formData.billing.country}
-                        onChange={(e) => handleInputChange('billing', 'country', e.target.value)}
-                        placeholder="United States"
-                      />
-                    </div>
+                    <LocationSelect
+                      countryValue={formData.billing.country}
+                      stateValue={formData.billing.state}
+                      cityValue={formData.billing.city}
+                      onCountryChange={(v) => handleInputChange('billing', 'country', v)}
+                      onStateChange={(v) => handleInputChange('billing', 'state', v)}
+                      onCityChange={(v) => handleInputChange('billing', 'city', v)}
+                    />
                   </div>
                 )}
               </motion.div>
