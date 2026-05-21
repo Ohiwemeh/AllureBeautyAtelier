@@ -3,6 +3,7 @@ import { initializePayment } from '@/lib/flutterwave/server'
 import { flutterwaveConfig } from '@/lib/flutterwave/config'
 import { generateOrderNumber } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
@@ -49,18 +50,23 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // The standard redirect flow returns a hosted checkout link
     const link = paymentData.data?.link
-
     if (!link) {
       throw new Error('No payment link returned from Flutterwave. Response: ' + JSON.stringify(paymentData))
     }
 
-    // Create a pending order in Supabase
+    // Get current user from the session-based client
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    const { data: order, error: orderError } = await supabase
+    // Use service role client to bypass RLS when inserting the order
+    const adminSupabase = createServiceClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      { auth: { persistSession: false } }
+    )
+
+    const { data: order, error: orderError } = await adminSupabase
       .from('orders')
       .insert({
         order_number: tx_ref,
@@ -79,11 +85,15 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (orderError) {
+      // Now we can see the real error — and block if critical
       console.error('Failed to create pending order:', orderError)
-      // Don't block payment — log and continue
+      return NextResponse.json(
+        { error: 'Could not create order: ' + orderError.message },
+        { status: 500 }
+      )
     }
 
-    // If we have an order, insert order items
+    // Insert order items
     if (order && items?.length) {
       const orderItems = items.map((item: { id: string; name: string; qty: number; price: number }) => ({
         order_id: order.id,
@@ -94,19 +104,17 @@ export async function POST(request: NextRequest) {
         total_price: item.price * item.qty,
       }))
 
-      const { error: itemsError } = await supabase
+      const { error: itemsError } = await adminSupabase
         .from('order_items')
         .insert(orderItems)
 
       if (itemsError) {
         console.error('Failed to create order items:', itemsError)
+        // Non-critical — order exists, items can be re-synced
       }
     }
 
-    return NextResponse.json({
-      tx_ref,
-      link,
-    })
+    return NextResponse.json({ tx_ref, link })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Payment initialization failed'
     console.error('Payment init error:', error)

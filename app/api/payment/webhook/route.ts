@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 // Flutterwave webhook handler
 export async function POST(request: NextRequest) {
   try {
@@ -36,8 +36,11 @@ export async function POST(request: NextRequest) {
         transaction_id,
       })
 
-      // Update order status in Supabase
-      const supabase = await createClient()
+const supabase = createServiceClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { auth: { persistSession: false } }
+)
 
       // Try to update an existing order by tx_ref
       const { error } = await supabase
