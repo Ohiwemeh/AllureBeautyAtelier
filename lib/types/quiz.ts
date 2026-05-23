@@ -23,17 +23,13 @@ export interface QuizResponse {
 
 export interface QuizResult {
   responses: QuizResponse[]
-  personalityType: string
+  personalityType: PersonalityType
   tags: string[]
   recommendedProducts: string[]
   completedAt: string
 }
 
-export type PersonalityType = 
-  | 'bold'
-  | 'soft'
-  | 'minimal'
-  | 'sensual'
+export type PersonalityType =
   | 'sophisticated_minimalist'
   | 'bold_adventurer'
   | 'gentle_romantic'
