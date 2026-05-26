@@ -235,7 +235,8 @@ export function getPersonalityDescription(type: PersonalityType): { title: strin
   }
 
   const options = descriptions[type] ?? descriptions.elegant_classic
-  return options[Math.floor(Math.random() * options.length)]
+ const seed = type.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+return options[seed % options.length]
 }
 
 function getPersonalityTags(type: PersonalityType): string[] {
