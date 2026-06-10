@@ -9,8 +9,9 @@ An affordable luxury headless e-commerce platform for premium fragrance and body
 - **Backend**: Next.js Route Handlers / Server Actions
 - **Database & Auth**: Supabase (PostgreSQL)
 - **AI**: Vercel AI SDK
-- **Payments**: Stripe
+- **Payments**: Flutterwave
 
+  
 ## Getting Started
 
 1. Install dependencies:
