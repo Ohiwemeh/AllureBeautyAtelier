@@ -172,7 +172,7 @@ export default function HomePage() {
               <div 
                 className="absolute inset-0 bg-cover bg-center luxury-border"
                 style={{
-                  backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1781621623/WhatsApp_Image_2026-06-12_at_10.59.32_aj64re.jpg')`
+                  backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1781630160/WhatsApp_Image_2026-06-12_at_10.59.32_1_z7c7zx.jpg')`
                 }}
               />
             </motion.div>
