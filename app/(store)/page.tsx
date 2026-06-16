@@ -100,7 +100,7 @@ export default function HomePage() {
             {
               title: "Body Care",
               description: "Affordable luxury rituals from head to toe",
-              image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80",
+              image: "https://res.cloudinary.com/dufw6bsko/image/upload/v1781621623/WhatsApp_Image_2026-06-12_at_10.59.32_aj64re.jpg",
               href: "/shop/bodycare"
             }
           ].map((category, index) => (
@@ -172,7 +172,7 @@ export default function HomePage() {
               <div 
                 className="absolute inset-0 bg-cover bg-center luxury-border"
                 style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80')`
+                  backgroundImage: `url('https://res.cloudinary.com/dufw6bsko/image/upload/v1781621623/WhatsApp_Image_2026-06-12_at_10.59.32_aj64re.jpg')`
                 }}
               />
             </motion.div>
