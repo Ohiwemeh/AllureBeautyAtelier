@@ -27,7 +27,7 @@ const categoryCards = [
     title: 'Body Care',
     subtitle: 'Elevate your self-care ritual',
     description: 'Refined body care products tailored to your needs.',
-    image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80',
+    image: 'https://res.cloudinary.com/dufw6bsko/image/upload/v1781636803/IMG_9794_1_oxz6lv.jpg',
   },
 ]
 
