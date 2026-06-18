@@ -2,12 +2,19 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowLeft, Save, Plus, X } from "lucide-react"
+import { ArrowLeft, Save, Plus, X, ImagePlus } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/lib/supabase/client"
+
+interface ImageFile {
+  file: File | null
+  preview: string
+  uploadedUrl: string | null
+  uploading: boolean
+}
 
 export default function NewProductPage() {
   const router = useRouter()
@@ -40,7 +47,8 @@ export default function NewProductPage() {
     "gift-set": ["Fragrance Sets", "Body Care Sets", "Complete Sets"],
   }
 
-  const [imageUrls, setImageUrls] = useState<string[]>([""])
+  const [imageFiles, setImageFiles] = useState<ImageFile[]>([])
+  const [imageError, setImageError] = useState<string | null>(null)
   const [ingredients, setIngredients] = useState<string[]>([])
   const [notes, setNotes] = useState<string[]>([])
   const [personalityTags, setPersonalityTags] = useState<string[]>([])
@@ -59,10 +67,64 @@ export default function NewProductPage() {
       setForm((prev) => ({ ...prev, slug }))
     }
 
-    // Clear subcategory when category changes
     if (field === "category") {
       setForm((prev) => ({ ...prev, subcategory: "" }))
     }
+  }
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    setImageError(null)
+    const supabase = createClient()
+
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) {
+        setImageError("Only image files are allowed.")
+        continue
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setImageError("Images must be under 5MB.")
+        continue
+      }
+
+      const preview = URL.createObjectURL(file)
+      const newImage: ImageFile = { file, preview, uploadedUrl: null, uploading: true }
+
+      setImageFiles((prev) => [...prev, newImage])
+
+      const ext = file.name.split(".").pop()
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+
+      const { data, error: uploadError } = await supabase.storage
+        .from("product-images")
+        .upload(fileName, file)
+
+      if (uploadError) {
+        setImageError(`Upload failed: ${uploadError.message}`)
+        setImageFiles((prev) => prev.filter((img) => img.preview !== preview))
+        continue
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("product-images")
+        .getPublicUrl(data.path)
+
+      setImageFiles((prev) =>
+        prev.map((img) =>
+          img.preview === preview
+            ? { ...img, uploadedUrl: urlData.publicUrl, uploading: false }
+            : img
+        )
+      )
+    }
+
+    e.target.value = ""
+  }
+
+  const removeImage = (index: number) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== index))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,11 +138,17 @@ export default function NewProductPage() {
       return
     }
 
+    if (imageFiles.some((img) => img.uploading)) {
+      setError("Please wait for all images to finish uploading.")
+      setIsLoading(false)
+      return
+    }
+
     const supabase = createClient()
 
-    const images = imageUrls
-      .filter((url) => url.trim())
-      .map((url) => ({ url: url.trim() }))
+    const images = imageFiles
+      .filter((img) => img.uploadedUrl)
+      .map((img) => ({ url: img.uploadedUrl as string }))
 
     const { error: insertError } = await supabase.from("products").insert({
       name: form.name,
@@ -348,43 +416,47 @@ export default function NewProductPage() {
         {/* Images */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
           <h2 className="text-lg font-medium text-gray-900">Images</h2>
-          <p className="text-sm text-gray-500">Add image URLs for this product.</p>
+          <p className="text-sm text-gray-500">Upload images for this product.</p>
 
-          {imageUrls.map((url, index) => (
-            <div key={index} className="flex gap-2">
-              <Input
-                value={url}
-                onChange={(e) => {
-                  const updated = [...imageUrls]
-                  updated[index] = e.target.value
-                  setImageUrls(updated)
-                }}
-                placeholder="https://example.com/image.jpg"
-                className="bg-white"
-              />
-              {imageUrls.length > 1 && (
-                <Button
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {imageFiles.map((file, index) => (
+              <div key={index} className="relative aspect-square rounded-lg border border-gray-200 overflow-hidden bg-gray-50 group">
+                <img
+                  src={file.preview}
+                  alt={`Product image ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                {file.uploading && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div className="h-6 w-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
+                <button
                   type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setImageUrls(imageUrls.filter((_, i) => i !== index))}
-                  className="text-gray-400 hover:text-red-500"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-2 right-2 h-6 w-6 bg-black/60 hover:bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
-            </div>
-          ))}
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ))}
 
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setImageUrls([...imageUrls, ""])}
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Add Image
-          </Button>
+            <label className="aspect-square rounded-lg border-2 border-dashed border-gray-300 hover:border-allure-gold flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors text-gray-400 hover:text-allure-gold">
+              <ImagePlus className="h-6 w-6" />
+              <span className="text-xs font-medium">Add Image</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          {imageError && (
+            <p className="text-sm text-red-600">{imageError}</p>
+          )}
         </div>
 
         {/* Tags & Lists */}
